@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-	[Header("Movement")]
-	[SerializeField] float moveSpeed;
-	[SerializeField] float jumpPower;
-	[SerializeField] float rotSpeed;
+	[Header("info")]
+	[SerializeField] private float rotSpeed = 540;
 
+
+	private StatHandler statHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
 	private Vector2 moveDir;
@@ -17,10 +17,13 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-		input = InputManager.Instance;
 		_rigidbody = GetComponent<Rigidbody>();
+		statHandler = GetComponent<StatHandler>();
+
+		input = InputManager.Instance;
 		input.move.action.performed +=  OnMoveInput;
 		input.move.action.canceled +=  OnMoveInput;
+		input.jump.action.started += OnJumpInput;
 	}
 
 	private void OnDestroy() 
@@ -42,6 +45,10 @@ public class PlayerController : MonoBehaviour
 	{
 		moveDir = context.ReadValue<Vector2>();
 	}
+	void  OnJumpInput(InputAction.CallbackContext context)
+	{
+		_rigidbody.AddForce(Vector3.up * statHandler.JumpPower, ForceMode.Impulse);
+	}
 
 	void Move(Vector2 dir)
 	{ 
@@ -58,7 +65,7 @@ public class PlayerController : MonoBehaviour
 		Vector3 rotatedInputDir = yawRotation * inputDir; 
 
 		targetRot = new Vector3(0, cameraYaw, 0); 
-		SetVelocity(rotatedInputDir * moveSpeed);  
+		SetVelocity(rotatedInputDir * statHandler.MoveSpeed);  
 	}
 	void Rotate(Vector3 rot)
 	{
@@ -70,7 +77,6 @@ public class PlayerController : MonoBehaviour
 		float t = Mathf.Clamp01((rotSpeed * Time.deltaTime) / angleDifference);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
 	}
-
 	void SetVelocity(Vector3 v)
 	{
 		v.y = _rigidbody.velocity.y;

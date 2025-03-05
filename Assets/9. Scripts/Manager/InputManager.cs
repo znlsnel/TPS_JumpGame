@@ -10,6 +10,7 @@ public class InputManager : Singleton<InputManager>
     public InputActionReference mouseMove;
     public InputActionReference move;
     public InputActionReference jump;
+    public InputActionReference mouseWheel;
 
 	protected override void Awake()
 	{
