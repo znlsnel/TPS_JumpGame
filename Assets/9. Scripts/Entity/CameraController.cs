@@ -6,6 +6,9 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class CameraController : MonoBehaviour
 {
+	[Header("Target")]
+	[SerializeField] Transform target;
+
 	[Header ("Camear Option")]
 	public float sensitivity = 100f;
 	private float rotationX = 0f;
@@ -23,9 +26,10 @@ public class CameraController : MonoBehaviour
 	{
 		MoveCamera();
 	}
-
+	 
 	void MoveCamera()
 	{
+		transform.position = target.position;
 		Vector2 mouseDelta = mouseDir * sensitivity * Time.deltaTime;
 
 		// 좌우 회전 (Y축 회전)
