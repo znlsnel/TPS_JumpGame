@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,24 +8,33 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("info")]
 	[SerializeField] private float rotSpeed = 540;
+	public LayerMask groundLayerMask;
 
-
+	private AnimationHandler animHandler;
 	private StatHandler statHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
 	private Vector2 moveDir;
 	private Vector3 targetRot;
 
+	private bool wasGrounded = true;
+
+
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody>();
 		statHandler = GetComponent<StatHandler>();
+		animHandler = GetComponent<AnimationHandler>();
 
 		input = InputManager.Instance;
 		input.move.action.performed +=  OnMoveInput;
 		input.move.action.canceled +=  OnMoveInput;
 		input.jump.action.started += OnJumpInput;
-	}
+
+		wasGrounded = IsGrounded();
+		InvokeRepeating(nameof(LandCheck), 0.1f, 0.1f);
+	} 
 
 	private void OnDestroy() 
 	{
@@ -39,6 +49,7 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		Move(moveDir);
+		animHandler.Move(moveDir);
 	}
 
 	void OnMoveInput(InputAction.CallbackContext context)
@@ -47,8 +58,12 @@ public class PlayerController : MonoBehaviour
 	}
 	void  OnJumpInput(InputAction.CallbackContext context)
 	{
-		_rigidbody.AddForce(Vector3.up * statHandler.JumpPower, ForceMode.Impulse);
-	}
+		if (IsGrounded())
+		{
+			_rigidbody.AddForce(Vector3.up * statHandler.JumpPower, ForceMode.Impulse);
+			animHandler.Jump(); 
+		}
+	} 
 
 	void Move(Vector2 dir)
 	{ 
@@ -82,5 +97,43 @@ public class PlayerController : MonoBehaviour
 		v.y = _rigidbody.velocity.y;
 		_rigidbody.velocity = v;
 
+	}
+
+	bool IsGrounded()
+	{
+		Ray[] rays = new Ray[4]
+		{
+			new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+			new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+			new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+			new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+		};
+
+		for (int i = 0; i < rays.Length; i++)
+		{
+			if (Physics.Raycast(rays[i], 1f, groundLayerMask))
+				return true;
+		}
+		return false;
+	}
+
+	void LandCheck()
+	{
+		Ray ray = new Ray(transform.position, Vector3.down);
+		bool isGround = Physics.Raycast(ray, 1f, groundLayerMask);
+
+		// °È´Ù°¡ ¶³¾îÁö´Â »óÈ²
+		if (wasGrounded && !isGround)
+		{
+			animHandler.Falling(); 
+		}
+
+		// Á¡ÇÁ ÈÄ, ÂøÁö »óÈ²
+		else if (!wasGrounded && isGround) 
+		{
+			animHandler.Landing();
+		}
+
+		wasGrounded = isGround;
 	}
 }

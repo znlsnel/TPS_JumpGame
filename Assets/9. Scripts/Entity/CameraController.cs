@@ -23,9 +23,9 @@ public class CameraController : MonoBehaviour
 	private Vector3 cameraDir;
 
 	private void Awake()
-	{
+	{ 
 		cameraDir = (Camera.main.transform.localPosition - transform.localPosition).normalized; 
-		InputManager.Instance.mouseMove.action.performed += MouseInput;
+		InputManager.Instance.mouseMove.action.performed += MouseInput; 
 		InputManager.Instance.mouseWheel.action.performed += MouseWheeInput;
 	}
 
@@ -46,7 +46,6 @@ public class CameraController : MonoBehaviour
 		}
 
 		mouseDir = context.ReadValue<Vector2>();
-		
 	}
 
 	void MouseWheeInput(InputAction.CallbackContext context)
