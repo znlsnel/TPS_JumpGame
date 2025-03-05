@@ -68,18 +68,23 @@ public class PlayerController : MonoBehaviour
 	void Move(Vector2 dir)
 	{ 
 		if (dir.magnitude <= 0f)
+		{
+			SetVelocity(_rigidbody.velocity / 2);
 			return;
-		
+		}
 
 		Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
 		float cameraYaw = Camera.main.transform.eulerAngles.y;
 
 		Quaternion yawRotation = Quaternion.Euler(0, cameraYaw, 0);
-
-		// inputDir을 카메라의 yaw 각도만큼 회전시킴
 		Vector3 rotatedInputDir = yawRotation * inputDir; 
 
-		targetRot = new Vector3(0, cameraYaw, 0); 
+		//targetRot = new Vector3(0, cameraYaw, 0);
+		//targetRot = rotatedInputDir;
+
+		Quaternion inputRotation = Quaternion.LookRotation(rotatedInputDir);
+		targetRot = inputRotation.eulerAngles; // 최종 회전 각도
+
 		SetVelocity(rotatedInputDir * statHandler.MoveSpeed);  
 	}
 	void Rotate(Vector3 rot)
@@ -118,7 +123,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void LandCheck()
-	{
+	{ 
 		Ray ray = new Ray(transform.position, Vector3.down);
 		bool isGround = Physics.Raycast(ray, 1f, groundLayerMask);
 
