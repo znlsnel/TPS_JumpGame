@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("info")]
 	[SerializeField] private float rotSpeed = 540;
+
+	 
 	public LayerMask groundLayerMask;
 
+	[NonSerialized]  public StatHandler statHandler;
 	private AnimationHandler animHandler;
-	private StatHandler statHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
 	private Vector2 moveDir;
@@ -20,32 +22,37 @@ public class PlayerController : MonoBehaviour
 	private bool wasGrounded = true;
 
 
-
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody>();
 		statHandler = GetComponent<StatHandler>();
 		animHandler = GetComponent<AnimationHandler>();
 
-		input = InputManager.Instance;
-		input.move.action.performed +=  OnMoveInput;
-		input.move.action.canceled +=  OnMoveInput;
-		input.jump.action.started += OnJumpInput;
+		InitInput();
 
 		wasGrounded = IsGrounded();
 		InvokeRepeating(nameof(LandCheck), 0.1f, 0.1f);
 	} 
 
+	void InitInput()
+	{
+		input = InputManager.Instance;
+
+		input.Move.action.performed += OnMoveInput;
+		input.Move.action.canceled += OnMoveInput;
+		input.Jump.action.started += OnJumpInput;
+	}
+
 	private void OnDestroy() 
 	{
-		input.move.action.performed -=  OnMoveInput;
-		input.move.action.canceled -=  OnMoveInput;
+		input.Move.action.performed -=  OnMoveInput;
+		input.Move.action.canceled -=  OnMoveInput;
 	}
 	private void Update()
 	{
 		Rotate(targetRot);
-
 	}
+
 	private void FixedUpdate()
 	{
 		Move(moveDir);
@@ -65,12 +72,16 @@ public class PlayerController : MonoBehaviour
 		}
 	} 
 
+
 	void Move(Vector2 dir)
-	{ 
+	{
+		bool isGround = IsGrounded();
+
 		if (dir.magnitude <= 0f)
 		{
-			SetVelocity(_rigidbody.velocity / 2);
-			return;
+			if (isGround)
+				SetVelocity(_rigidbody.velocity / 2); 
+			return; 
 		}
 
 		Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
@@ -79,13 +90,10 @@ public class PlayerController : MonoBehaviour
 		Quaternion yawRotation = Quaternion.Euler(0, cameraYaw, 0);
 		Vector3 rotatedInputDir = yawRotation * inputDir; 
 
-		//targetRot = new Vector3(0, cameraYaw, 0);
-		//targetRot = rotatedInputDir;
-
 		Quaternion inputRotation = Quaternion.LookRotation(rotatedInputDir);
 		targetRot = inputRotation.eulerAngles; // 최종 회전 각도
 
-		SetVelocity(rotatedInputDir * statHandler.MoveSpeed);  
+		SetVelocity(rotatedInputDir * statHandler.MoveSpeed); 
 	}
 	void Rotate(Vector3 rot)
 	{
@@ -103,7 +111,6 @@ public class PlayerController : MonoBehaviour
 		_rigidbody.velocity = v;
 
 	}
-
 	bool IsGrounded()
 	{
 		Ray[] rays = new Ray[4]
@@ -121,11 +128,10 @@ public class PlayerController : MonoBehaviour
 		}
 		return false;
 	}
-
 	void LandCheck()
-	{ 
-		Ray ray = new Ray(transform.position, Vector3.down);
-		bool isGround = Physics.Raycast(ray, 1f, groundLayerMask);
+	{
+
+		bool isGround = IsGrounded();
 
 		// 걷다가 떨어지는 상황
 		if (wasGrounded && !isGround)

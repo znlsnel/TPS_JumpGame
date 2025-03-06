@@ -7,30 +7,36 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class CameraController : MonoBehaviour
 {
-	[Header("Info")]
+
+	[Header ("Camear Option")]
 	[SerializeField] Transform target;
+	[SerializeField] Vector3 cameraDir;
+
+	[Space(10)]
 	[SerializeField] private float minDistance;
 	[SerializeField] private float maxDistance;
 	[SerializeField] private float cameraDist = 3f;
-
-	[Header ("Camear Option")]
-	public float sensitivity = 100f;
-	public float minXRot = -50f;
-	public float maxXRot = 50f;
-
+	[SerializeField] private float sensitivity = 100f;
+	[SerializeField] private float minXRot = -50f;
+	[SerializeField] private float maxXRot = 50f;
+	 
 	private float rotationX = 0f;
 	private Vector2 mouseDir;
-	private Vector3 cameraDir;
 
 	private void Awake()
 	{ 
-		cameraDir = (Camera.main.transform.localPosition - transform.localPosition).normalized; 
-		InputManager.Instance.mouseMove.action.performed += MouseInput; 
-		InputManager.Instance.mouseWheel.action.performed += MouseWheeInput;
+		InputManager.Instance.MouseMove.action.performed += MouseInput; 
+		InputManager.Instance.MouseWheel.action.performed += MouseWheeInput;
 	}
 
 	private void LateUpdate()
 	{
+		if (GameManager.Instance.IsGameOver)
+		{ 
+			LookAtTarget(); 
+			return; 
+		}
+
 		MoveCamera();
 		SetCameraDist();
 	}
@@ -83,4 +89,12 @@ public class CameraController : MonoBehaviour
 
 		Camera.main.transform.localPosition = cameraDir * dist;
 	} 
+
+
+	void LookAtTarget()
+	{
+		Vector3 dir = (target.position - transform.position).normalized;
+		var rotation = Quaternion.LookRotation(dir);
+		transform.rotation = rotation;
+	}
 } 
