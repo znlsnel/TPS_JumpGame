@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InteractivePlatform : MonoBehaviour
+public abstract class Platform : MonoBehaviour
 {
 	[SerializeField] private LayerMask layer;
 

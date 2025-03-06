@@ -25,7 +25,7 @@ public class Condition : MonoBehaviour
 	private void Start()
 	{
 		curValue = startValue;
-		GameManager.Instance.PlayerController.statHandler.RegistCondition(this);
+		GameManager.Instance.PlayerController.StatHandler.RegistCondition(this);
 	}
 
 

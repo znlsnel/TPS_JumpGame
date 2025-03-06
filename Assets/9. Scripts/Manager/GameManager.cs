@@ -56,5 +56,10 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
+	public IEnumerator SetTimer(Action action, float time)
+	{
+		yield return new WaitForSeconds(time);
+		action?.Invoke();
+	}
 }
  

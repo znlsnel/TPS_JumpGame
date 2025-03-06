@@ -13,12 +13,14 @@ public class InputManager : Singleton<InputManager>
 	[SerializeField] private InputActionReference jump;
 	[SerializeField] private InputActionReference mouseWheel;
 	[SerializeField] private InputActionReference dash;
+	[SerializeField] private InputActionReference interaction;
 
 	public InputActionReference MouseMove => mouseMove;
 	public InputActionReference Move => move;
 	public InputActionReference Jump => jump;
 	public InputActionReference MouseWheel => mouseWheel;
 	public InputActionReference Dash => dash;
+	public InputActionReference Interaction => interaction;
 
 
 	protected override void Awake()

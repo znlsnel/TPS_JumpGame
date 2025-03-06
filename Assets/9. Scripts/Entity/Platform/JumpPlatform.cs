@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpPlatform : InteractivePlatform
+public class JumpPlatform : Platform
 {
 	[SerializeField] private float jumpPower;
 

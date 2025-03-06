@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MovingPlatform : InteractivePlatform
+public class MovingPlatform : Platform
 {
 	[Header("Moving Platform")]
 	[SerializeField] private float speed;
@@ -17,7 +17,6 @@ public class MovingPlatform : InteractivePlatform
 	private int curIdx = 0;
 	private int nextIdx = 1;
 
-	private float time = 0;
 	private Vector3 prevPosition;
 
 	private void Awake()
@@ -46,13 +45,15 @@ public class MovingPlatform : InteractivePlatform
 
 	private void MovePlatform()
 	{
-		transform.position = Vector3.Slerp(positions[curIdx], positions[nextIdx], time);
-		
-		time += Time.deltaTime * speed;
-		if (time >= 1.0f)
+		Vector3 dir = (positions[nextIdx] - positions[curIdx]).normalized;
+		float goalDist = Vector3.Distance(positions[nextIdx], positions[curIdx]);
+
+		transform.position += dir * Time.deltaTime * speed;
+		float curDist = Vector3.Distance(transform.position, positions[curIdx]);
+
+		if (goalDist <= curDist)
 		{
-			time = 0.0f;
-			curIdx = nextIdx;
+			curIdx = nextIdx; 
 
 			if (isLoop)
 			{

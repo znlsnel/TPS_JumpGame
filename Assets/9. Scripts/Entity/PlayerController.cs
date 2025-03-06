@@ -8,11 +8,12 @@ public class PlayerController : MonoBehaviour
 {
 	[Header("info")]
 	[SerializeField] private float rotSpeed = 540;
-
 	 
 	public LayerMask groundLayerMask;
+	 
+	private StatHandler statHandler;
+	private PlayerUIHandler playerUIHandler;
 
-	[NonSerialized]  public StatHandler statHandler;
 	private AnimationHandler animHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
@@ -21,9 +22,12 @@ public class PlayerController : MonoBehaviour
 
 	private bool wasGrounded = true;
 
+	public StatHandler StatHandler => statHandler;
+	public PlayerUIHandler PlayerUIHandler => playerUIHandler;
 
 	private void Awake()
 	{
+		playerUIHandler = GetComponent<PlayerUIHandler>();
 		_rigidbody = GetComponent<Rigidbody>();
 		statHandler = GetComponent<StatHandler>();
 		animHandler = GetComponent<AnimationHandler>();

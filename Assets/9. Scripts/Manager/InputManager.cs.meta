@@ -10,6 +10,7 @@ MonoImporter:
   - jump: {fileID: 5871395054929887257, guid: faa573217bc1bd547837b9564ffd458b, type: 3}
   - mouseWheel: {fileID: 1005858623189148722, guid: faa573217bc1bd547837b9564ffd458b, type: 3}
   - dash: {fileID: -3785022641856864242, guid: faa573217bc1bd547837b9564ffd458b, type: 3}
+  - interaction: {fileID: 8436531901401309082, guid: faa573217bc1bd547837b9564ffd458b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
