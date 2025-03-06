@@ -17,35 +17,25 @@ public class Condition : MonoBehaviour
 	[SerializeField] public ConditionType type;
 	[SerializeField] private float startValue;
 	[SerializeField] private float maxValue;
-	[SerializeField] private float passiveValue;
-	[SerializeField] private float passiveTimeRate;
+	[SerializeField] private float passiveValuePerSecond;
 	[SerializeField] private Image uiBar;
 
 	[NonSerialized] public float curValue;
 
-	private void Awake()
-	{
-		curValue = startValue;
-		InvokeRepeating(nameof(UpdatePassive), 0, passiveTimeRate);
-		
-	}
-
 	private void Start()
 	{
+		curValue = startValue;
 		GameManager.Instance.PlayerController.statHandler.RegistCondition(this);
-
 	}
 
-	void UpdatePassive()
-	{
-		Add(passiveValue);
-	}
+
 
 
 
 	private void Update()
 	{
 		uiBar.fillAmount = GetPercentage();
+		Add(passiveValuePerSecond * Time.deltaTime); 
 	}
 
 	float GetPercentage()

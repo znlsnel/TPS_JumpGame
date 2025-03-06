@@ -14,17 +14,18 @@ public class StatHandler : MonoBehaviour
 	[Range(1f, 20f)][SerializeField] private float moveSpeed = 3; 
 	[Range(1f, 20f)][SerializeField] private float dashSpeed = 10;
 	[Range(1f, 20f)][SerializeField] private float jumpPower = 10;
-	[SerializeField] private float dashStaminaCost;
-	[SerializeField] private float dashStaminaTimeRate;
+	[SerializeField] private float dashCostPerSecond;
 
 	public float JumpPower { get => jumpPower; set => jumpPower = Mathf.Clamp(value, 0, 100); }
 	public float MoveSpeed {
-		get => onDash != null ? dashSpeed : moveSpeed;
+		get => IsDashing ? dashSpeed : moveSpeed;
 		set => moveSpeed = Mathf.Clamp(value, 0, 100); 
 	}
 
+	bool onPressDashButton = false;
+	bool IsDashing => onPressDashButton && conditions[ConditionType.Stamina].curValue >= dashCostPerSecond * Time.deltaTime;
 	private InputManager input;
-	private Coroutine onDash;
+
 
 	private void Start() 
 	{
@@ -32,7 +33,14 @@ public class StatHandler : MonoBehaviour
 		input.Dash.action.started += OnDashInput;
 		input.Dash.action.canceled += OnDashInput;
 	}
-	 
+
+	private void Update()
+	{
+		float cost = dashCostPerSecond * Time.deltaTime;
+		if (onPressDashButton && cost <= conditions[ConditionType.Stamina].curValue)
+			conditions[ConditionType.Stamina].Substract(dashCostPerSecond * Time.deltaTime); 
+	}
+
 	public void RegistCondition(Condition condition)
 	{
 		conditions.Add(condition.type, condition);
@@ -47,31 +55,7 @@ public class StatHandler : MonoBehaviour
 	}
 	 
 	void OnDashInput(InputAction.CallbackContext context)
-	{ 
-		var isPressed = context.ReadValue<float>() > 0;
-		Condition stamina = conditions[ConditionType.Stamina];
-
-		if (isPressed && stamina.curValue > dashStaminaCost)
-		{
-			onDash = StartCoroutine(GameManager.Instance.RepeatingAction(() =>
-			{
-				if (stamina.curValue < dashStaminaCost)
-				{
-					if (onDash != null)
-					{
-						StopCoroutine(onDash);
-						onDash = null;
-					}
-					return;
-				} 
-				conditions[ConditionType.Stamina].Substract(dashStaminaCost);
-			}, dashStaminaTimeRate));
-		}
-		 
-		else if (onDash != null)
-		{
-			StopCoroutine(onDash);
-			onDash = null;
-		}
+	{
+		onPressDashButton = context.ReadValue<float>() > 0; 
 	}
 }
