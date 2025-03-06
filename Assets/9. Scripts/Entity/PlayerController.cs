@@ -62,6 +62,11 @@ public class PlayerController : MonoBehaviour
 	void OnMoveInput(InputAction.CallbackContext context)
 	{
 		moveDir = context.ReadValue<Vector2>();
+		if (moveDir.magnitude <= 0f)
+		{
+			SetVelocity(_rigidbody.velocity / 3); 
+			return;  
+		}
 	}
 	void  OnJumpInput(InputAction.CallbackContext context)
 	{
@@ -74,16 +79,11 @@ public class PlayerController : MonoBehaviour
 
 
 	void Move(Vector2 dir)
-	{
-		bool isGround = IsGrounded();
-
+	{  
 		if (dir.magnitude <= 0f)
-		{
-			if (isGround)
-				SetVelocity(_rigidbody.velocity / 2); 
 			return; 
-		}
-
+		
+		 
 		Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
 		float cameraYaw = Camera.main.transform.eulerAngles.y;
 

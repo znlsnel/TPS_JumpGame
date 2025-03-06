@@ -80,10 +80,11 @@ public class CameraController : MonoBehaviour
 	void SetCameraDist() 
 	{
 		float dist = cameraDist;
-		Vector3 dir = (Camera.main.transform.position - transform.position).normalized;
-		Ray ray = new Ray(transform.position + Vector3.up * 0.2f, dir);  
+		Vector3 startPos = transform.position + Vector3.up * 0.5f;
+		Vector3 dir = (Camera.main.transform.position - startPos).normalized;
+		Ray ray = new Ray(startPos + Vector3.up * 0.2f, dir);  
 
-		RaycastHit hit;
+		RaycastHit hit; 
 		if (Physics.Raycast(ray, out hit, cameraDist))
 			dist = (hit.point - transform.position).magnitude;
 

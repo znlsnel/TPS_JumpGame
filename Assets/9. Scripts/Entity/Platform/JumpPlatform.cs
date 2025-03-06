@@ -26,11 +26,9 @@ public class JumpPlatform : InteractivePlatform
 			Rigidbody rb = target.GetComponent<Rigidbody>();
 			if (rb != null)
 			{
-				Vector3 v = rb.velocity;
-				v.y = 0;
-				rb.velocity = v;
-				rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-			}
+				rb.velocity = Vector3.zero;
+				rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+			} 
 		}
 	} 
 }
