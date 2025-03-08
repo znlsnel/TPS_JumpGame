@@ -7,14 +7,14 @@ using UnityEngine;
 public class Util : MonoBehaviour
 {
 	static readonly string prefabPath = "Assets/4. Prefab/Items";
-	static readonly string itemDataPath = "Assets/5. Datas/Item";
+	static readonly string itemDataPath = "Assets/5. Datas/EquipItem";
 
 	[MenuItem("Tools/ItemInitialize")]
 	static void ItemInitialize()
 	{ 
 		string[] prefabsPath = AssetDatabase.FindAssets("t:GameObject", new[] { prefabPath });
 		string[] itemDatasPath = AssetDatabase.FindAssets("t:ScriptableObject", new[] { itemDataPath });
-
+		 
 		Dictionary<string, ItemData> itemDatas = new Dictionary<string, ItemData>();
 		Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 

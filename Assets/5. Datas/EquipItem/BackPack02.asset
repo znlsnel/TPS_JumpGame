@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 532bf979372888e4ab73dee975bb5d53, type: 3}
-  m_Name: BackPack03
+  m_Name: BackPack02
   m_EditorClassIdentifier: 
-  name: "\uB9C8\uBC95\uC0AC\uC758 \uAC00\uBC29"
-  description: "\uB9C8\uBC95\uC0AC\uC758 \uAC00\uBC29\uC785\uB2C8\uB2E4"
-  moveSpeed: 0
-  jumpPower: 0
+  name: "\uC5EC\uD589\uC790\uC758 \uAC00\uBC29"
+  description: "\uC5EC\uD589\uC6A9 \uAC00\uBC29\uC785\uB2C8\uB2E4"
+  moveSpeed: 1
+  jumpPower: 1
   stamina: 0
   type: 0
-  dropItemPrefab: {fileID: 2714888622774860615, guid: 3cbb2f4ee2388f94db641e5a47781f6a, type: 3}
+  dropItemPrefab: {fileID: 8747290877323968194, guid: 5f18a4a1ebd7fed41bdce4ddc9a86f21, type: 3}
   equipType: 0
   duration: 0

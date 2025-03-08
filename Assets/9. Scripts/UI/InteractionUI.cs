@@ -7,6 +7,7 @@ public class InteractionUI : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI ItemName;
 	[SerializeField] private TextMeshProUGUI description;
+	[SerializeField] private TextMeshProUGUI stat;
 
 	//[SerializeField] private TextMeshProUGUI statName;
 
@@ -17,8 +18,10 @@ public class InteractionUI : MonoBehaviour
 
 	public void RegistItem(Item item)
 	{
-
 		ItemName.text = item != null ? item.data.name : string.Empty;
 		description.text = item != null ? item.data.description : string.Empty;
+		stat.text = item != null ? item.data.GetStatDescription() : string.Empty; 
+
+
 	}
 }

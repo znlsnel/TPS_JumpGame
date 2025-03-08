@@ -16,13 +16,8 @@ public class EquipHandler : MonoBehaviour
     private Dictionary<EEquipType, GameObject> equipItems = new Dictionary<EEquipType, GameObject>();
     private Dictionary<EEquipType, Action> onUnEquip = new Dictionary<EEquipType, Action>();
 
-    private StatHandler statHandler;
-
-
     private void Awake()
     {
-		statHandler = GetComponent<StatHandler>();
-
         equipTs.Add(EEquipType.Head, FindChildByName(transform, headEquip));
         equipTs.Add(EEquipType.Hair, FindChildByName(transform, HairEquip));
         equipTs.Add(EEquipType.Body, FindChildByName(transform, BodyEquip));
@@ -36,7 +31,7 @@ public class EquipHandler : MonoBehaviour
 		}
 	} 
      
-    public void FindItems(EEquipType type)
+    public void FindItems(EEquipType type) 
     {
         equipItems[type] = equipTs[type].childCount > 0 ? equipTs[type].GetChild(0).gameObject : null;
 	}
@@ -68,12 +63,14 @@ public class EquipHandler : MonoBehaviour
 			curItem.transform.SetParent(null, false);
 			curItem.transform.position = transform.position + transform.forward * 0.3f;
 			myItem.data.onUnequip?.Invoke();
+			curItem.gameObject.GetComponent<BoxCollider>().enabled = true;
 		}
 		else
 			Destroy(curItem);
-
+		 
 
 		// 새로운 아이템 장착
+		nextItem.gameObject.GetComponent<BoxCollider>().enabled = false;
 		nextItem.transform.SetParent(ts, false);
         nextItem.transform.localPosition = Vector3.zero;
         equipItems[type] = nextItem; 

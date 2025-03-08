@@ -39,4 +39,18 @@ public class ItemData : ScriptableObject
     [SerializeField] public float duration;
 
     [NonSerialized] public Action onUnequip;
+
+
+    public string GetStatDescription()
+    {
+        string ret = "";
+        if (moveSpeed > 0)
+            ret +=  $"스피드 + {moveSpeed}\n";
+        if (jumpPower > 0)
+            ret += $"점프력 + {jumpPower}\n";
+        if (stamina > 0) 
+            ret += $"스태미나 {stamina} 회복";
+
+        return ret; 
+    }
 }
