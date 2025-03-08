@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 	[Header ("Camear Option")]
 	[SerializeField] Transform target;
 	[SerializeField] Vector3 cameraDir;
+	[SerializeField] LayerMask hitLayer;
 
 	[Space(10)]
 	[SerializeField] private float minDistance;
@@ -85,7 +86,7 @@ public class CameraController : MonoBehaviour
 		Ray ray = new Ray(startPos + Vector3.up * 0.2f, dir);  
 
 		RaycastHit hit; 
-		if (Physics.Raycast(ray, out hit, cameraDist))
+		if (Physics.Raycast(ray, out hit, cameraDist, hitLayer))
 			dist = (hit.point - transform.position).magnitude;
 
 		Camera.main.transform.localPosition = cameraDir * dist;

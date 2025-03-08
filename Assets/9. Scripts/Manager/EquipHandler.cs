@@ -9,7 +9,7 @@ public class EquipHandler : MonoBehaviour
 {
     static private readonly string headEquip = "Head_Equip";
     static private readonly string HairEquip = "Hair_Equip";
-    static private readonly string CloakEquip = "Cloak_Equip";
+    static private readonly string BackpackEquip = "Backpack_Equip";
     static private readonly string BodyEquip = "Body_Equip";
 
     private Dictionary<EEquipType, Transform> equipTs = new Dictionary<EEquipType, Transform>();
@@ -26,7 +26,7 @@ public class EquipHandler : MonoBehaviour
         equipTs.Add(EEquipType.Head, FindChildByName(transform, headEquip));
         equipTs.Add(EEquipType.Hair, FindChildByName(transform, HairEquip));
         equipTs.Add(EEquipType.Body, FindChildByName(transform, BodyEquip));
-        equipTs.Add(EEquipType.Cloak, FindChildByName(transform, CloakEquip));
+        equipTs.Add(EEquipType.Cloak, FindChildByName(transform, BackpackEquip));
 
 		foreach (EEquipType type in Enum.GetValues(typeof(EEquipType)))
 		{

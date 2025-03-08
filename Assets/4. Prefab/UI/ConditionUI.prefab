@@ -372,9 +372,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  startValue: 3
+  startValue: 0
   maxValue: 10
-  passiveValuePerSecond: 1
+  passiveValuePerSecond: 0
   uiBar: {fileID: 6262288326151714678}
 --- !u!1 &1742817582450946090
 GameObject:
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  startValue: 3
+  startValue: 10
   maxValue: 10
   passiveValuePerSecond: 1
   uiBar: {fileID: 5207482642764029364}

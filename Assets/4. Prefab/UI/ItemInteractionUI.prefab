@@ -65,10 +65,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: this Item is djwjdosj do veveveve dododo dpdpdp aososkl meme reoro siuuuuuuuuuuuuuuuuuuuuuuu
+  m_text: "\uC544\uC774\uD15C \uC124\uBA85 \uC774\uB7EC\uCFF5 \uC800\uB7EC\uCFF5
+    \uC798 \uB098\uC624\uB294\uC9C0 \uCCB4\uD06C\uCCB4\uD06C \uD705\uD4B9\uB8A4 "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4791e291b4cab8c4f83930a4ef6c50b8, type: 2}
+  m_sharedMaterial: {fileID: 8770083790297077088, guid: 4791e291b4cab8c4f83930a4ef6c50b8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -393,10 +394,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ITEM NAME
+  m_text: "\uC544\uC774\uD15C \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4791e291b4cab8c4f83930a4ef6c50b8, type: 2}
+  m_sharedMaterial: {fileID: 8770083790297077088, guid: 4791e291b4cab8c4f83930a4ef6c50b8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

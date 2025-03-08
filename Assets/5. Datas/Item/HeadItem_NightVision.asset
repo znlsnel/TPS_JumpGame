@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532bf979372888e4ab73dee975bb5d53, type: 3}
+  m_Name: HeadItem_NightVision
+  m_EditorClassIdentifier: 
+  name: "\uC57C\uAC04\uD22C\uC2DC\uACBD"
+  description: "\uC5B4\uB450\uC6B4 \uACF3\uB3C4 \uBCFC \uC218 \uC788\uB294 \uC57C\uAC04
+    \uD22C\uC2DC\uACBD\uC785\uB2C8\uB2E4. \uC2E4\uC81C \uD6A8\uACFC\uB294 \uC5C6\uC2B5\uB2C8\uB2E4"
+  moveSpeed: 0
+  jumpPower: 0
+  stamina: 0
+  type: 0
+  dropItemPrefab: {fileID: 2895720492366422145, guid: 781efd4ef0a1a51439eb689c4b3d904e, type: 3}
+  equipType: 2
+  duration: 0
