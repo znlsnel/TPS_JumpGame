@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 	[SerializeField] private float sensitivity = 100f;
 	[SerializeField] private float minXRot = -50f;
 	[SerializeField] private float maxXRot = 50f;
-	 
+
 	private float rotationX = 0f;
 	private Vector2 mouseDir;
 
@@ -28,6 +28,7 @@ public class CameraController : MonoBehaviour
 	{ 
 		InputManager.Instance.MouseMove.action.performed += MouseInput; 
 		InputManager.Instance.MouseWheel.action.performed += MouseWheeInput;
+		cameraDir = cameraDir.normalized;
 	}
 
 	private void LateUpdate()
@@ -42,7 +43,7 @@ public class CameraController : MonoBehaviour
 		SetCameraDist();
 	}
 	 
-
+	 
 	  
 	void MouseInput(InputAction.CallbackContext context)
 	{
@@ -81,16 +82,16 @@ public class CameraController : MonoBehaviour
 	void SetCameraDist() 
 	{
 		float dist = cameraDist;
-		Vector3 startPos = transform.position + Vector3.up * 0.5f;
+		Vector3 startPos = transform.position + Vector3.up * 0.3f;
 		Vector3 dir = (Camera.main.transform.position - startPos).normalized;
-		Ray ray = new Ray(startPos + Vector3.up * 0.2f, dir);  
 
-		RaycastHit hit; 
-		if (Physics.Raycast(ray, out hit, cameraDist, hitLayer))
-			dist = (hit.point - transform.position).magnitude;
+		Ray ray = new Ray(startPos + Vector3.up * 0.2f, dir);   
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit, dist * 1.1f, hitLayer))
+			dist = (hit.point - startPos).magnitude; 
 
-		Camera.main.transform.localPosition = cameraDir * dist;
-	} 
+		Camera.main.transform.localPosition = cameraDir * Mathf.Min(dist, cameraDist);
+	}  
 
 
 	void LookAtTarget()
