@@ -57,16 +57,24 @@ public class EquipHandler : MonoBehaviour
 	public void EquipItem(Item item)
     {
         EEquipType type = item.data.equipType;
-		var nextItem = Instantiate<GameObject>(item.data.dropItemPrefab);
-        GameObject prevItem = equipItems[type];
         Transform ts = equipTs[type];
 
-        //onUnEquip[type]?.Invoke();
-        //onUnEquip[type] = null;
+		GameObject nextItem = item.gameObject;
+        GameObject curItem = equipItems[type];
+
+		// 현재 장착중인 아이템 장착 해제
+		if (curItem != null && curItem.TryGetComponent(out Item myItem))
+		{
+			curItem.transform.SetParent(null, false);
+			curItem.transform.position = transform.position + transform.forward * 0.3f;
+			myItem.data.onUnequip?.Invoke();
+		}
+		else
+			Destroy(curItem);
 
 
-        Destroy(prevItem);
-        nextItem.transform.SetParent(ts, false);
+		// 새로운 아이템 장착
+		nextItem.transform.SetParent(ts, false);
         nextItem.transform.localPosition = Vector3.zero;
         equipItems[type] = nextItem; 
 	}

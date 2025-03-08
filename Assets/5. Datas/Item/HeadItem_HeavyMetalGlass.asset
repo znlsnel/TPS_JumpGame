@@ -18,6 +18,6 @@ MonoBehaviour:
   jumpPower: 0
   stamina: 0
   type: 0
-  dropItemPrefab: {fileID: 2895720492366422145, guid: 781efd4ef0a1a51439eb689c4b3d904e, type: 3}
+  dropItemPrefab: {fileID: 8669433954581418926, guid: 2df8fdc24104052418eb7aeb8713786c, type: 3}
   equipType: 2
   duration: 0

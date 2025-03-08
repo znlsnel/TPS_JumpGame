@@ -12,33 +12,33 @@ public class Util : MonoBehaviour
 	[MenuItem("Tools/ItemInitialize")]
 	static void ItemInitialize()
 	{ 
-		string[] prefabs = AssetDatabase.FindAssets("t:GameObject", new[] { prefabPath });
-		string[] itemDatas = AssetDatabase.FindAssets("t:ScriptableObject", new[] { itemDataPath });
+		string[] prefabsPath = AssetDatabase.FindAssets("t:GameObject", new[] { prefabPath });
+		string[] itemDatasPath = AssetDatabase.FindAssets("t:ScriptableObject", new[] { itemDataPath });
 
-		Dictionary<string, ItemData> datas = new Dictionary<string, ItemData>();
-		Dictionary<string, GameObject> items = new Dictionary<string, GameObject>();
+		Dictionary<string, ItemData> itemDatas = new Dictionary<string, ItemData>();
+		Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
-		foreach (string prefab in prefabs) 
+		foreach (string path in prefabsPath) 
 		{
-			string assetPath = AssetDatabase.GUIDToAssetPath(prefab);
+			string assetPath = AssetDatabase.GUIDToAssetPath(path);
 			GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
 			string fileName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
 
-			items.Add(fileName, go);
+			prefabs.Add(fileName, go);
 		}
 
-		foreach (string itemData in itemDatas)
+		foreach (string path in itemDatasPath)
 		{
-			string assetPath = AssetDatabase.GUIDToAssetPath(itemData);
+			string assetPath = AssetDatabase.GUIDToAssetPath(path);
 			ItemData so = AssetDatabase.LoadAssetAtPath<ItemData>(assetPath);
 			string fileName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
 
-			datas.Add(fileName, so);
+			itemDatas.Add(fileName, so);
 		}
 
 
 
-		foreach (var tuple in items)
+		foreach (var tuple in prefabs)
 		{
 			GameObject go = tuple.Value;
 			string key = tuple.Key;
@@ -46,15 +46,28 @@ public class Util : MonoBehaviour
 			if (!go.TryGetComponent(out Item itemHandler))
 				itemHandler = go.AddComponent<Item>();
 
-			datas.TryGetValue(key, out itemHandler.data);
+			if (!itemDatas.TryGetValue(key, out itemHandler.data))
+			{
+				// ScriptableObject 생성
+				ItemData newItemData = ScriptableObject.CreateInstance<ItemData>();
+				string newAssetPath = $"{itemDataPath}/{key}.asset";
+				AssetDatabase.CreateAsset(newItemData, newAssetPath);
+				AssetDatabase.SaveAssets();
+
+				// Dictionary에 추가
+				itemDatas.Add(key, newItemData);
+				itemHandler.data = newItemData;
+
+				Debug.Log($"Created new ItemData: {key}");
+			}
 		}
 
-		foreach (var tuple in datas)
+		foreach (var tuple in itemDatas)
 		{
 			ItemData go = tuple.Value;
 			string key = tuple.Key;
 
-			items.TryGetValue(key, out go.dropItemPrefab);
+			prefabs.TryGetValue(key, out go.dropItemPrefab);
 		} 
 
 	}

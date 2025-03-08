@@ -9,17 +9,15 @@ public class InteractionHandler : MonoBehaviour
     [SerializeField] private LayerMask layer;
 	[SerializeField] private float interactionDistance;
 
-	StatHandler statHander;
+	PlayerItemHandler playerItemHandler;
 	PlayerUIHandler uiHandler;
-	EquipHandler equipHandler;
 	Item selectItem;
 
 	private void Start()
 	{
 		InvokeRepeating(nameof(Find), 0, 0.1f);
 
-		statHander = GetComponent<StatHandler>();
-		equipHandler = GetComponent<EquipHandler>();
+		playerItemHandler = GetComponent<PlayerItemHandler>();
 
 		uiHandler = GameManager.Instance.PlayerController.PlayerUIHandler;
 		InputManager.Instance.Interaction.action.started += InteractionInput;
@@ -45,33 +43,8 @@ public class InteractionHandler : MonoBehaviour
 		if (selectItem == null)
 			return;
 
-		if (selectItem.data.type == EItemType.Equipable)
-		{
-			equipHandler.EquipItem(selectItem);
-		}
-
-		if (selectItem.data.type == EItemType.Consumable)
-		{
-			float moveSpeed = selectItem.data.moveSpeed;
-			float jumpPower = selectItem.data.jumpPower;
-			float duration = selectItem.data.duration;
-
-			// 사용
-			statHander.MoveSpeed += moveSpeed;
-			statHander.JumpPower += jumpPower;
-			statHander.GetCondition(ConditionType.Stamina).Add(selectItem.data.stamina);
-
-			
-			// 일정 시간 뒤에 효과 취소 
-			StartCoroutine(GameManager.Instance.SetTimer(() =>
-			{
-				statHander.MoveSpeed -= moveSpeed;
-				statHander.JumpPower -= jumpPower;
-			}, duration));
-
-			Destroy(selectItem.gameObject);
-			selectItem = null;
-		}
+		playerItemHandler.PickupItem(selectItem);
+	
 
 
 	}

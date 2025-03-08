@@ -15,9 +15,9 @@ MonoBehaviour:
   name: "\uD1A0\uB07C \uADC0"
   description: "\uD1A0\uB07C \uADC0\uC785\uB2C8\uB2E4"
   moveSpeed: 0
-  jumpPower: 0
+  jumpPower: 4
   stamina: 0
   type: 0
-  dropItemPrefab: {fileID: 2895720492366422145, guid: 781efd4ef0a1a51439eb689c4b3d904e, type: 3}
+  dropItemPrefab: {fileID: 2263360479510795895, guid: d33d4904bcacdc040977562026114e47, type: 3}
   equipType: 2
   duration: 0

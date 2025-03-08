@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uCC9C\uC0AC\uC758 \uADC0"
   description: "\uCC9C\uC0AC\uC758 \uADC0 \uC785\uB2C8\uB2E4."
-  moveSpeed: 0
+  moveSpeed: 3
   jumpPower: 0
   stamina: 0
   type: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public enum EItemType
@@ -27,7 +28,7 @@ public class ItemData : ScriptableObject
     [SerializeField] public float moveSpeed;
     [SerializeField] public float jumpPower;
     [SerializeField] public float stamina;
-	[SerializeField] public EItemType type;
+    [SerializeField] public EItemType type;
 
     [Header("Equipable Item Info")]
     [SerializeField] public GameObject dropItemPrefab;
@@ -37,6 +38,5 @@ public class ItemData : ScriptableObject
     [Header("Consumable Item Info")]
     [SerializeField] public float duration;
 
-    
+    [NonSerialized] public Action onUnequip;
 }
- 

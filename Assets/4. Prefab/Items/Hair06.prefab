@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4391656588123007842}
   - component: {fileID: 315212577265411996}
   - component: {fileID: 7970248268436319320}
-  m_Layer: 0
+  - component: {fileID: 4010795644744533466}
+  m_Layer: 6
   m_Name: Hair06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,3 +98,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: df1c857a2faec204e84616541c7ab64d, type: 2}
+--- !u!65 &4010795644744533466
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112331921168051193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8888643, y: 0.8993065, z: 0.8781241}
+  m_Center: {x: -0.005322486, y: 0.21932861, z: -0.034874156}
