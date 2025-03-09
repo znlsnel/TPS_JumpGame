@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InteractionUI : MonoBehaviour
 {
-	[SerializeField] private TextMeshProUGUI ItemName;
+	[SerializeField] private TextMeshProUGUI objectName;
 	[SerializeField] private TextMeshProUGUI description;
 	[SerializeField] private TextMeshProUGUI stat;
 
@@ -13,15 +13,18 @@ public class InteractionUI : MonoBehaviour
 
 	private void Awake()
 	{
-		RegistItem(null);
+		Init();
+	} 
+
+	public void ShowObjectInfo(string name, string description, string stat = "")
+	{
+		this.objectName.text = name;
+		this.description.text = description;
+		this.stat.text = stat;
 	}
 
-	public void RegistItem(Item item)
+	public void Init()
 	{
-		ItemName.text = item != null ? item.data.name : string.Empty;
-		description.text = item != null ? item.data.description : string.Empty;
-		stat.text = item != null ? item.data.GetStatDescription() : string.Empty; 
-
-
+		ShowObjectInfo("", "", "");
 	}
 }

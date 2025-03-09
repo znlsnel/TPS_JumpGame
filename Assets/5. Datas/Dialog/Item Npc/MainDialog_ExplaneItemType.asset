@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6408e95e097415c41ba94c63a2eed473, type: 3}
+  m_Name: MainDialog_ExplaneItemType
+  m_EditorClassIdentifier: 
+  text: "\uC7A5\uCC29\uD615 \uC544\uC774\uD15C\uC740 \uC7A5\uCC29\uD558\uB294 \uB3D9\uC548
+    \uC2A4\uD0EF\uC744 \uACC4\uC18D\uD574\uC11C \uC62C\uB824\uC8FC\uC9C0\uB9CC, \uC18C\uBAA8\uD615
+    \uC544\uC774\uD15C\uC740 \uC77C\uC815 \uC2DC\uAC04\uB3D9\uC548\uB9CC \uC62C\uB824\uC918,
+    \uADF8\uB798\uC11C \uD560\uAC70\uC57C \uB9D0\uAC70\uC57C?"
+  playerAnswers:
+  - text: "\uC5B4\uB5A4 \uC2A4\uD0EF\uC744 \uC62C\uB824\uC8FC\uB294\uB370"
+    nextDialog: {fileID: 11400000, guid: 01b0b1582d3b1c14dbeea7945054746e, type: 2}
+    Assept: 0
+  - text: "\uD574\uBCFC\uAC8C"
+    nextDialog: {fileID: 0}
+    Assept: 1
+  - text: "\uC548\uD560\uB798 \uD544\uC694\uC5C6\uC5B4"
+    nextDialog: {fileID: 11400000, guid: 28e9ee83431be854e8ee6c5f5a693a81, type: 2}
+    Assept: 0

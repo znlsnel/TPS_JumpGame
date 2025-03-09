@@ -13,12 +13,14 @@ public class InteractionHandler : MonoBehaviour
 	[SerializeField, Range(0, 1)] private float yOffset;
 	[SerializeField, Range(0, 1)] private float xOffset;
 	 
-
+	private InteractionUI interactionUI;
 	private RectTransform aim;
-	private PlayerItemHandler playerItemHandler;
-	private PlayerUIHandler uiHandler;
-	private Item selectItem;
+	private interactableObject selectObject;
 
+	private void Awake()
+	{
+		interactionUI = UIHandler.Instance.InteractionUI;
+	}
 	private void Start()
 	{
 		InvokeRepeating(nameof(Find), 0, 0.1f);
@@ -31,32 +33,39 @@ public class InteractionHandler : MonoBehaviour
 			aim.localPosition = aim.parent.InverseTransformPoint(pos); 
 		} 
 
-		playerItemHandler = GetComponent<PlayerItemHandler>();
-
-		uiHandler = GameManager.Instance.PlayerController.PlayerUIHandler;
 		InputManager.Instance.Interaction.action.started += InteractionInput;
 	}
-	 
+	  
 	void Find()
     {
 		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * xOffset, Screen.height * yOffset, 0));
-		RaycastHit hit; 
+		RaycastHit hit;
 
-		selectItem = null;
+		bool found = false;
 		if (Physics.Raycast(ray, out hit, interactionDistance, layer))
 		{
-			selectItem = hit.collider.gameObject.GetComponent<Item>();
+			var obj = hit.collider.gameObject.GetComponent<interactableObject>();
+			if (obj != selectObject)
+			{
+				obj.ShowInfo();
+				selectObject = obj;
+			}
+			found = obj != null;
 		}
 
-		uiHandler.InteractionUI.RegistItem(selectItem);
+		if (!found && selectObject != null)
+		{
+			interactionUI.Init();
+			selectObject = null;
+		}
 	} 
 
 
 	void InteractionInput(InputAction.CallbackContext context)
 	{
-		if (selectItem == null)
+		if (selectObject == null)
 			return;
 
-		playerItemHandler.PickupItem(selectItem);
+		selectObject.Interaction(gameObject); 
 	}
 }

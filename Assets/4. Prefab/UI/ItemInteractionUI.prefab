@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dcfdb8bd2acfb46b8be8ff7ad48085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: {fileID: 2334054901676027872}
+  objectName: {fileID: 2334054901676027872}
   description: {fileID: 1842958423913333498}
   stat: {fileID: 4198949239457669732}
 --- !u!1 &8013335162572318642

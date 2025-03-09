@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6408e95e097415c41ba94c63a2eed473, type: 3}
+  m_Name: MainDialog_SelectNo
+  m_EditorClassIdentifier: 
+  text: "\uC54C\uACA0\uC5B4~ \uC0DD\uAC01\uC774 \uBC14\uB00C\uBA74 \uC5B8\uC81C\uB4E0
+    \uC640\uB3C4 \uB3FC"
+  playerAnswers:
+  - text: "\u3147\u314B~"
+    nextDialog: {fileID: 0}

@@ -9,12 +9,17 @@ public enum NpcState
     Move,
 }
 
-public class NpcController : MonoBehaviour
+public class NpcController : MonoBehaviour, interactableObject
 {
 	private static readonly int Greeting = Animator.StringToHash("Greeting");
 	private static readonly int Throw = Animator.StringToHash("Throw");
 	private static readonly int Dance = Animator.StringToHash("Dance");
 	private static readonly int Move = Animator.StringToHash("Move");
+
+	[Header("Npc Info")]
+	[SerializeField] private string npcName;
+	[SerializeField, TextArea(3, 10)] private string npcDescription; 
+
 
 	[Header("Stats")]
 	[SerializeField] private float moveSpeed;
@@ -83,5 +88,13 @@ public class NpcController : MonoBehaviour
 		return hit.position; 
 	}
 
+	public void Interaction(GameObject player)
+	{
+		 
+	}
 
+	public void ShowInfo()
+	{
+		UIHandler.Instance.InteractionUI.ShowObjectInfo(npcName, npcDescription);
+	}
 }
