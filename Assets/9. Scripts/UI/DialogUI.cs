@@ -13,7 +13,7 @@ public class DialogUI : MonoBehaviour
     [SerializeField] private GameObject buttonParent;
 	
 	private List<GameObject> responseButtons = new List<GameObject>();
-	private UnityEvent<bool> onEndDialog = new UnityEvent<bool>();
+	private UnityEvent onEndDialog = new UnityEvent();
 	private GameObject parentPanel;
 
 	private void Awake() 
@@ -26,10 +26,15 @@ public class DialogUI : MonoBehaviour
 		CloseUI();
 	}
 	 
-	public void OpenUI(DialogNodeSO rootDialog, Action<bool> onEndDialog)
+	public void OpenUI(string npcName, DialogNodeSO rootDialog, Action onEndDialog = null)
 	{
+		InputManager.Instance.ActiveInputSystem(false);
+		nameText.text = npcName;
 		parentPanel.SetActive(true);
-		this.onEndDialog.AddListener(onEndDialog.Invoke);
+		this.onEndDialog.RemoveAllListeners();
+
+		if (onEndDialog != null)
+			this.onEndDialog.AddListener(onEndDialog.Invoke); 
 		UpdateDialogUI(rootDialog);
 	} 
 
@@ -37,7 +42,8 @@ public class DialogUI : MonoBehaviour
 	{
 		if (dialog == null)
 		{
-			CloseUI();
+			CloseUI(); 
+			InputManager.Instance.ActiveInputSystem(true);
 			return;
 		}
 
@@ -55,11 +61,11 @@ public class DialogUI : MonoBehaviour
 				var next = dialog.Responses[idx].nextDialog;
 					UpdateDialogUI(next); 
 				 
-				if (next == null)
-					onEndDialog?.Invoke(dialog.Responses[idx].Assept);  
+				if (dialog.Responses[idx].Assept)
+					onEndDialog?.Invoke();  
 			});
 
-			responseButtons[i].GetComponentInChildren<Text>().text = dialog.Responses[i].text;
+			responseButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = dialog.Responses[i].text;
 			responseButtons[i].SetActive(true);
 		}
 

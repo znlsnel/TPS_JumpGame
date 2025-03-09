@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: "\uB108 \uCF54\uC778\uC774 \uC5C6\uB294\uAC70\uAC19\uC740\uB370? \uC704\uB85C
     \uC624\uB974\uB2E4 \uBCF4\uBA74 \uCF54\uC778\uC744 \uC5BB\uC744 \uC218 \uC788\uC744\uAC70\uC57C"
-  playerAnswers:
-  - text: "\u3147\u314B"
+  responses:
+  - text: "\u3147\u314B~"
     nextDialog: {fileID: 0}
-    answerType: 2
+    Assept: 0

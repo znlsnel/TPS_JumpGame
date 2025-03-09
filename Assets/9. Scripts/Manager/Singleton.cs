@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Component
 {
-	private static T instance;
+	private static T _instance;
 	public static T Instance { 
 		
 		get
 		{
-			if (instance == null)
+			if (_instance == null)
 			{
-				instance = FindFirstObjectByType<T>();
-				if (instance == null)
-					instance = new GameObject("Input System").AddComponent<T>();
+				_instance = FindFirstObjectByType<T>();
+				if (_instance == null)
+					_instance = new GameObject("Input System").AddComponent<T>();
 			}
-			return instance;
+			return _instance;
 		}
 	}
 
 	protected virtual void Awake()
 	{
-		if (instance == null)
+		if (_instance == null)
 		{
-			instance = this as T; 
+			_instance = this as T; 
 			if (transform.parent != null)
 			{
 				transform.SetParent(null);
@@ -32,7 +32,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
 
 			DontDestroyOnLoad(gameObject);
 		}
-		else
+		else if (_instance != this)
 		{
 			Destroy(gameObject);
 		}

@@ -26,11 +26,14 @@ public class CameraController : MonoBehaviour
 
 	private void Awake()
 	{ 
-		InputManager.Instance.MouseMove.action.performed += MouseInput; 
-		InputManager.Instance.MouseWheel.action.performed += MouseWheeInput;
+
 		cameraDir = cameraDir.normalized;
 	}
-
+	private void Start()
+	{
+		InputManager.Instance.MouseMove.action.performed += MouseInput;
+		InputManager.Instance.MouseWheel.action.performed += MouseWheeInput;
+	}
 	private void LateUpdate()
 	{
 		if (GameManager.Instance.IsGameOver)

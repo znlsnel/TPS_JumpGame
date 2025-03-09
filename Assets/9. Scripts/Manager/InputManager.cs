@@ -23,10 +23,19 @@ public class InputManager : Singleton<InputManager>
 	public InputActionReference Interaction => interaction;
 
 
-	protected override void Awake()
+	protected override void Awake() 
 	{
-		base.Awake();
+		base.Awake(); 
 		playerInput.Enable();
 
 	}
+
+	public void ActiveInputSystem(bool active)
+	{
+		if (active)
+			playerInput.Enable();
+		else
+			playerInput.Disable();
+	}
+
 }

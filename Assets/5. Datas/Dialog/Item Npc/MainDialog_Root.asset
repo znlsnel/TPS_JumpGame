@@ -15,13 +15,13 @@ MonoBehaviour:
   text: "\uC548\uB155! \uB098\uD55C\uD14C 1 \uCF54\uC778\uC744 \uC8FC\uBA74 \uC2A4\uD0EF\uC744
     \uC62C\uB824\uC8FC\uB294 \uC544\uC774\uD15C\uC744 \uC904\uAC8C \uD560\uB798?
     \uC544\uC774\uD15C\uC740 \uB79C\uB364\uC774\uC57C!"
-  playerAnswers:
-  - text: "\uC5B4\uB5A4 \uC544\uC774\uD15C\uC774 \uC788\uB294\uB370?"
-    nextDialog: {fileID: 11400000, guid: b054ac760f2c41f46bb2c0728e142e01, type: 2}
+  responses:
+  - text: "\uC5B4\uB5A4 \uC544\uC774\uD15C\uC774 \uC788\uB294\uB370:\t"
+    nextDialog: {fileID: 11400000, guid: 3600d14333f653e4eb2daa080acc8d08, type: 2}
     Assept: 0
-  - text: "\uC751 \uD560\uB798"
+  - text: "\uC751 \uD560\uB798\t"
     nextDialog: {fileID: 0}
     Assept: 1
-  - text: "\uC544\uB2C8 \uC548\uD560\uB798"
+  - text: "\uD544\uC694\uC5C6\uC5B4~"
     nextDialog: {fileID: 11400000, guid: 28e9ee83431be854e8ee6c5f5a693a81, type: 2}
     Assept: 0

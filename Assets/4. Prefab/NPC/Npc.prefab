@@ -5844,8 +5844,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0a3823dfbf6954f8445b347a83f0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: 
-  npcDescription: 
+  npcName: "\uAE40\uD3EC\uB514"
+  npcDescription: "[E] \uD0A4\uB97C \uB20C\uB7EC\uC11C \uB300\uD654\uD558\uAE30"
+  dialog: {fileID: 11400000, guid: 43256fefdcc0b944a9332ff076461239, type: 2}
+  successDialog: {fileID: 11400000, guid: 5e1c8a9b5327a314eb75bece9f442064, type: 2}
+  failedDialog: {fileID: 11400000, guid: a0fc3a1d778fc1d44b0c67437b247480, type: 2}
   moveSpeed: 3
   minWanderDistance: 5
   maxWanderDistance: 10

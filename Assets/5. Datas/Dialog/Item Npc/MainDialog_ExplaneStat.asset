@@ -16,10 +16,13 @@ MonoBehaviour:
     \uCD94\uAC00\uB85C \uC18C\uBAA8\uD615 \uC544\uC774\uD15C\uC740 \uC2A4\uD0DC\uBBF8\uB108\uB97C
     \uD68C\uBCF5\uD560 \uC218 \uC788\uAC8C \uB3C4\uC640\uC8FC\uB294 \uC544\uC774\uD15C\uB3C4
     \uC788\uC5B4"
-  playerAnswers:
-  - text: "\uD558\uB098 \uC918\uBD10"
+  responses:
+  - text: "\uC5B4\uB5A4 \uC544\uC774\uD15C \uD0C0\uC785\uC774 \uC788\uB294\uB370?"
+    nextDialog: {fileID: 11400000, guid: b054ac760f2c41f46bb2c0728e142e01, type: 2}
+    Assept: 0
+  - text: "\uC88B\uC544 \uD560\uB798"
     nextDialog: {fileID: 0}
     Assept: 1
-  - text: "\uADF8\uB807\uAD6C\uB098~ \uD544\uC694\uC5C6\uC5B4"
+  - text: "\uD544\uC694\uC5C6\uC5B4~"
     nextDialog: {fileID: 11400000, guid: 28e9ee83431be854e8ee6c5f5a693a81, type: 2}
     Assept: 0

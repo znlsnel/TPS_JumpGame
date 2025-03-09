@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	public LayerMask groundLayerMask;
 	 
 	private StatHandler statHandler;
+	private PlayerDataHandler playerDataHandler;
 	private AnimationHandler animHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
@@ -21,19 +22,23 @@ public class PlayerController : MonoBehaviour
 	private bool wasGrounded = true;
 
 	public StatHandler StatHandler => statHandler;
-
+	public PlayerDataHandler PlayerDataHandler => playerDataHandler;
 	private void Awake()
 	{
+		playerDataHandler = GetComponent<PlayerDataHandler>();
 		_rigidbody = GetComponent<Rigidbody>();
 		statHandler = GetComponent<StatHandler>();
 		animHandler = GetComponent<AnimationHandler>();
 
-		InitInput();
 
 		wasGrounded = IsGrounded();
 		InvokeRepeating(nameof(LandCheck), 0.1f, 0.1f);
-	} 
+	}
+	private void Start()
+	{
+		InitInput();
 
+	}
 	void InitInput()
 	{
 		input = InputManager.Instance;

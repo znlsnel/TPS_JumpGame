@@ -17,15 +17,14 @@ public class InteractionHandler : MonoBehaviour
 	private RectTransform aim;
 	private interactableObject selectObject;
 
-	private void Awake()
-	{
-		interactionUI = UIHandler.Instance.InteractionUI;
-	}
+
 	private void Start()
 	{
 		InvokeRepeating(nameof(Find), 0, 0.1f);
+		interactionUI = UIHandler.Instance.InteractionUI;
 
-		aim = Instantiate<GameObject>(aimUIPrefab).transform.GetChild(0).GetComponent<RectTransform>();
+		 
+	aim = Instantiate<GameObject>(aimUIPrefab).transform.GetChild(0).GetComponent<RectTransform>();
 		if (aim != null)
 		{
 			var pos = new Vector3(Screen.width * xOffset, Screen.height * yOffset);

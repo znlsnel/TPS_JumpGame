@@ -8,7 +8,7 @@ public class Item : MonoBehaviour, interactableObject
 
 	public void Interaction(GameObject player)
 	{
-		player.GetComponent<PlayerItemHandler>()?.PickupItem(this);
+		player.GetComponent<PlayerDataHandler>()?.PickupItem(this);
 	}
 
 	public void ShowInfo()

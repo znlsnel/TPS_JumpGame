@@ -16,9 +16,11 @@ MonoBehaviour:
     \uC544\uC774\uD15C\uC774 \uC788\uC5B4! \uC7A5\uCC29\uD615 \uC544\uC774\uD15C\uC740
     \uBA38\uB9AC \uC545\uC138\uC11C\uB9AC, \uD5E4\uC5B4\uC2A4\uD0C0\uC77C, \uAC00\uBC29
     \uB4F1\uC774 \uC788\uC5B4"
-  playerAnswers:
-  - text: "\uC18C\uBAA8\uD615 \uC544\uC774\uD15C\uC774\uB791 \uC7A5\uCC29\uD615 \uC544\uC774\uD15C\uC740
+  responses:
+  - text: "\uC5B4\uB5A4 \uC2A4\uD0EF\uC744 \uC62C\uB824\uC918?"
+    nextDialog: {fileID: 11400000, guid: 01b0b1582d3b1c14dbeea7945054746e, type: 2}
+    Assept: 0
+  - text: "\uC7A5\uCC29\uD615 \uC544\uC774\uD15C\uC774\uB791 \uC18C\uBAA8\uD615 \uC544\uC774\uD15C\uC740
       \uBB50\uAC00 \uB2EC\uB77C?"
     nextDialog: {fileID: 11400000, guid: b054ac760f2c41f46bb2c0728e142e01, type: 2}
-  - text: "\uC5B4\uB5A4 \uC2A4\uD0EF\uC744 \uC62C\uB824\uC8FC\uB294\uB370?"
-    nextDialog: {fileID: 11400000, guid: 01b0b1582d3b1c14dbeea7945054746e, type: 2}
+    Assept: 0

@@ -18,8 +18,10 @@ public class NpcController : MonoBehaviour, interactableObject
 
 	[Header("Npc Info")]
 	[SerializeField] private string npcName;
-	[SerializeField, TextArea(3, 10)] private string npcDescription; 
-
+	[SerializeField, TextArea(3, 10)] private string npcDescription;
+	[SerializeField] DialogNodeSO dialog;
+	[SerializeField] DialogNodeSO successDialog;
+	[SerializeField] DialogNodeSO failedDialog;
 
 	[Header("Stats")]
 	[SerializeField] private float moveSpeed;
@@ -90,11 +92,36 @@ public class NpcController : MonoBehaviour, interactableObject
 
 	public void Interaction(GameObject player)
 	{
-		 
+		UIHandler.Instance.DialogUI.OpenUI(npcName, dialog, () => CheckCoin());
 	}
 
 	public void ShowInfo()
 	{
 		UIHandler.Instance.InteractionUI.ShowObjectInfo(npcName, npcDescription);
 	}
+
+	public void CheckCoin()
+	{
+		int coin = GameManager.Instance.PlayerController.PlayerDataHandler.Coin;
+		if (coin > 0)
+		{
+			GameManager.Instance.PlayerController.PlayerDataHandler.Coin -= 1;
+			UIHandler.Instance.DialogUI.OpenUI(npcName, successDialog, ()=>SpawnItem());
+			
+		}
+        else
+        {
+			UIHandler.Instance.DialogUI.OpenUI(npcName, failedDialog);
+		}
+	}
+
+	public void SpawnItem()
+	{
+		GameObject item  = GameManager.Instance.GetRandomItem();
+		var go = Instantiate(item);
+		var player = GameManager.Instance.PlayerController;
+		go.transform.position = player.transform.position + player.transform.forward * 0.5f;
+		 
+	}
+
 }

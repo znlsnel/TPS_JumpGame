@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -15,14 +16,18 @@ public class GameManager : Singleton<GameManager>
 	private bool isGameOver = false; 
 	public bool IsGameOver => isGameOver;
 	public PlayerController PlayerController => player;
+	List<GameObject> itemPrefabs = new List<GameObject>();
+
 	protected override void Awake() 
 	{
 		base.Awake();
+
 		gameUIHandler = FindFirstObjectByType<GameUIHandler>(); 
 		player = FindFirstObjectByType<PlayerController>();
+		itemPrefabs = Util.GetItemPrefabs();
 		InvokeRepeating(nameof(CheckGameOver), 0, 0.1f);
 	}
-
+	 
 	public void Clear()
 	{
 		gameUIHandler.GameClear();
@@ -60,6 +65,12 @@ public class GameManager : Singleton<GameManager>
 	{
 		yield return new WaitForSeconds(time);
 		action?.Invoke();
+	}
+
+
+	public GameObject GetRandomItem()
+	{
+		return itemPrefabs[Random.Range(0, itemPrefabs.Count)];
 	}
 }
  

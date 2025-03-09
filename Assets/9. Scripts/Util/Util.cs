@@ -9,6 +9,20 @@ public class Util : MonoBehaviour
 	static readonly string prefabPath = "Assets/4. Prefab/Items";
 	static readonly string itemDataPath = "Assets/5. Datas/EquipItem";
 
+	public static List<GameObject> GetItemPrefabs()
+	{
+		List<GameObject> ret = new List<GameObject>();
+		string[] prefabsPath = AssetDatabase.FindAssets("t:GameObject", new[] { prefabPath });
+
+		foreach (string path in prefabsPath)
+		{
+			string assetPath = AssetDatabase.GUIDToAssetPath(path);
+			GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+			ret.Add(go);
+		}
+		return ret;
+	}
+
 	[MenuItem("Tools/ItemInitialize")]
 	static void ItemInitialize()
 	{ 

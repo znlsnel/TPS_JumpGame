@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class PlayerItemHandler : MonoBehaviour
+public class PlayerDataHandler : MonoBehaviour
 {
+	private int coin = 1; 
+	public int Coin {get => coin; set=>coin = value; }	
 	EquipHandler equipHandler;
 	StatHandler statHander;
 

@@ -14,7 +14,7 @@ public class InteractionUI : MonoBehaviour
 	private void Awake()
 	{
 		Init();
-	} 
+	}  
 
 	public void ShowObjectInfo(string name, string description, string stat = "")
 	{

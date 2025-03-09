@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SubDialog_HasCoin
   m_EditorClassIdentifier: 
   text: "\uC88B\uC544 1 \uCF54\uC778\uC744 \uC544\uC774\uD15C\uC73C\uB85C \uBC14\uAFD4\uC904\uAC8C!"
-  playerAnswers:
-  - text: "\u3147\u314B"
+  responses:
+  - text: "\uACE0\uB9C8\uC6CC!"
     nextDialog: {fileID: 0}
-    answerType: 2
+    Assept: 0
