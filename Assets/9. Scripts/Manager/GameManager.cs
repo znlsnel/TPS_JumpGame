@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
 		gameUIHandler = FindFirstObjectByType<GameUIHandler>(); 
 		player = FindFirstObjectByType<PlayerController>();
 		itemPrefabs = Util.GetItemPrefabs();
-		InvokeRepeating(nameof(CheckGameOver), 0, 0.1f);
 
 		Item[] myItem = FindObjectsByType<Item>(FindObjectsSortMode.None);
 
@@ -34,28 +33,26 @@ public class GameManager : Singleton<GameManager>
 				consumableItems.Add(item);	
 	}
 	 
-	public void Clear()
+	public void GameClear()
 	{
 		gameUIHandler.GameClear();
 	}
 
-	void CheckGameOver()
+	public void GameOver()
 	{
 		if (isGameOver)
 			return; 
 
-		if (player.transform.position.y < yGameOverLimit || player.StatHandler.IsDie())
-		{
-			isGameOver = true;
-			gameUIHandler?.GameOver();
-			Invoke(nameof(RespawnPlayer), respawnTime);
-		}
-	} 
-
+		isGameOver = true;
+		gameUIHandler?.GameOver();
+		Invoke(nameof(RespawnPlayer), respawnTime);
+	}  
+	 
 	void RespawnPlayer()
-	{
+	{ 
 		gameUIHandler?.InitUI();
 		player.transform.position = StartPoint.position;
+		player.StatHandler.GetCondition(ConditionType.Health).Add(100000);
 		isGameOver = false;
 
 		foreach (Item item in consumableItems)

@@ -26,7 +26,7 @@ public class StatHandler : MonoBehaviour
 	bool IsDashing => onPressDashButton && conditions[ConditionType.Stamina].curValue >= dashCostPerSecond * Time.deltaTime;
 	private InputManager input;
 
-
+	public event Action onTakeDamage;
 	private void Start() 
 	{
 		input = InputManager.Instance;
@@ -60,4 +60,17 @@ public class StatHandler : MonoBehaviour
 	}
 
 	public bool IsDie() => conditions[ConditionType.Health].curValue <= 0.0f;
+
+
+	public void OnDamage(float damage) 
+	{
+		var health = GetCondition(ConditionType.Health);
+		if (health.curValue <= 0.0f)
+			return;
+
+		onTakeDamage?.Invoke();
+		health.Substract(damage);
+		if (health.curValue <= 0.0f)
+			GameManager.Instance.GameOver();
+	}
 }

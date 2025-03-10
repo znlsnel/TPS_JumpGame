@@ -26,7 +26,7 @@ public class BulletController : MonoBehaviour
 			if (isOnKnockback)
 				other.GetComponent<PlayerController>().ApplyKnockback(_rigidbody.velocity, knockbackPower, knockbackTime);
 
-			other.GetComponent<StatHandler>().GetCondition(ConditionType.Health).Substract(damage);
+			other.GetComponent<StatHandler>().OnDamage(damage);
 			Debug.Log("¸Â¾Ò´Ù.");
 		}  
 	} 
