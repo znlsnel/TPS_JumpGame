@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
 	[SerializeField] Transform target;
 	[SerializeField] Vector3 cameraDir;
 	[SerializeField] LayerMask hitLayer;
+	[SerializeField] float cameraSpeed;
 
 	[Space(10)]
 	[SerializeField] private float minDistance;
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
 	}
 	private void Start()
 	{
+		transform.position = target.position; 
 		InputManager.Instance.MouseMove.action.performed += MouseInput;
 		InputManager.Instance.MouseWheel.action.performed += MouseWheeInput;
 	}
@@ -68,7 +70,9 @@ public class CameraController : MonoBehaviour
 
 	void MoveCamera()
 	{
+	
 		transform.position = target.position;
+	
 		Vector2 mouseDelta = mouseDir * sensitivity * Time.deltaTime;
 
 		// 좌우 회전 (Y축 회전)

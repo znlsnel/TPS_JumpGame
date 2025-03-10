@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
@@ -7,6 +8,7 @@ public class AnimationHandler : MonoBehaviour
 	private static readonly int IsMoving = Animator.StringToHash("IsMove");
 	private static readonly int IsJumping = Animator.StringToHash("IsJump");
 	private static readonly int IsInAir = Animator.StringToHash("IsInAir");
+	private static readonly int Climb = Animator.StringToHash("Climb");
 
 
 	protected Animator animator;
@@ -34,6 +36,12 @@ public class AnimationHandler : MonoBehaviour
 	public void Falling()
 	{
 		animator.SetBool(IsInAir, true);
+	}
+
+	public void OnClimb()
+	{
+		animator.SetTrigger(Climb);
+	
 	}
 
 }

@@ -18,10 +18,10 @@ public class EquipHandler : MonoBehaviour
 
     private void Awake()
     {
-        equipTs.Add(EEquipType.Head, FindChildByName(transform, headEquip));
-        equipTs.Add(EEquipType.Hair, FindChildByName(transform, HairEquip));
-        equipTs.Add(EEquipType.Body, FindChildByName(transform, BodyEquip));
-        equipTs.Add(EEquipType.Cloak, FindChildByName(transform, BackpackEquip));
+        equipTs.Add(EEquipType.Head, Util.FindChildByName(transform, headEquip));
+        equipTs.Add(EEquipType.Hair, Util.FindChildByName(transform, HairEquip));
+        equipTs.Add(EEquipType.Body, Util.FindChildByName(transform, BodyEquip));
+        equipTs.Add(EEquipType.Cloak, Util.FindChildByName(transform, BackpackEquip));
 
 		foreach (EEquipType type in Enum.GetValues(typeof(EEquipType)))
 		{
@@ -36,18 +36,7 @@ public class EquipHandler : MonoBehaviour
         equipItems[type] = equipTs[type].childCount > 0 ? equipTs[type].GetChild(0).gameObject : null;
 	}
 
-	Transform FindChildByName(Transform parent, string childName)
-	{
-		Transform[] allChildren = parent.GetComponentsInChildren<Transform>();
-		foreach (Transform child in allChildren)
-		{
-			if (child.name == childName)
-			{
-				return child;
-			}
-		}
-		return null;
-	}
+
 
 	public void EquipItem(Item item)
     {

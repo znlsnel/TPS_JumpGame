@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478801217621086483}
   - component: {fileID: 1406887760317338756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,16 +78,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -11.060419, y: 0, z: -11.932616}
-  - {x: 32.362007, y: 0, z: -52.01065}
-  - {x: 103.95868, y: 0, z: -60.12203}
-  - {x: 279.45416, y: 0, z: -51.17449}
-  - {x: 417.70416, y: 0, z: -28.424492}
-  - {x: 411.95416, y: 0, z: -6.174492}
-  - {x: 354.14795, y: 0, z: 20.234825}
-  - {x: 125.81311, y: 0, z: 23.962212}
-  - {x: 57.960793, y: 0, z: 29.257717}
-  - {x: 6.146147, y: 0, z: 13.997196}
+  - {x: 28.343702, y: 11.332265, z: -3.9540315}
+  - {x: 63.470577, y: 36.19818, z: -5.6600766}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -95,7 +87,7 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.11455536
+        time: 0.10172911
         value: 0
         inSlope: 0
         outSlope: 0
@@ -145,7 +137,7 @@ LineRenderer:
     generateLightingData: 0
   m_MaskInteraction: 0
   m_UseWorldSpace: 1
-  m_Loop: 1
+  m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!1 &2510137296715160066
 GameObject:
@@ -156,7 +148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3639997654745465344}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StartPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6550285531302382434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EndPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +215,7 @@ GameObject:
   - component: {fileID: 4906792451303720052}
   - component: {fileID: 6057516177099613089}
   - component: {fileID: 8270461826800765566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +231,7 @@ Transform:
   m_GameObject: {fileID: 7376301276173036540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.3, y: 0, z: -11.9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -273,7 +265,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a46ddefb78a484643af07aed081bf055, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -16,4 +16,4 @@ MonoBehaviour:
   responses:
   - text: "\uACE0\uB9C8\uC6CC!"
     nextDialog: {fileID: 0}
-    Assept: 0
+    Assept: 1

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	private StatHandler statHandler;
 	private PlayerDataHandler playerDataHandler;
 	private AnimationHandler animHandler;
+	private ClimbHandler climbHandler;
 	private InputManager input;
 	private Rigidbody _rigidbody;
 	private Vector2 moveDir;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
 	public PlayerDataHandler PlayerDataHandler => playerDataHandler;
 	private void Awake()
 	{
+		climbHandler = GetComponent<ClimbHandler>();
 		playerDataHandler = GetComponent<PlayerDataHandler>();
 		_rigidbody = GetComponent<Rigidbody>();
 		statHandler = GetComponent<StatHandler>();
@@ -67,9 +69,10 @@ public class PlayerController : MonoBehaviour
 	void OnMoveInput(InputAction.CallbackContext context)
 	{
 		moveDir = context.ReadValue<Vector2>();
+		climbHandler.Move(moveDir.magnitude > 0f);
 		if (moveDir.magnitude <= 0f && IsGrounded())
 		{
-			SetVelocity(_rigidbody.velocity / 3); 
+			//SetVelocity(_rigidbody.velocity / 3);  
 			return;   
 		}
 	}
@@ -85,9 +88,9 @@ public class PlayerController : MonoBehaviour
 
 	void Move(Vector2 dir)
 	{  
-		if (dir.magnitude <= 0f || !IsGrounded())
+		if (dir.magnitude <= 0f)
 			return; 
-		
+		 
 		 
 		 
 		Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
@@ -113,8 +116,9 @@ public class PlayerController : MonoBehaviour
 	}
 	void SetVelocity(Vector3 v)
 	{
-		v.y = _rigidbody.velocity.y;
-		_rigidbody.velocity = v;
+		_rigidbody.MovePosition(transform.position + (v * 0.01f)) ; 
+		//v.y = _rigidbody.velocity.y;
+		//_rigidbody.velocity = v;
 
 	}
 	bool IsGrounded()
@@ -138,17 +142,20 @@ public class PlayerController : MonoBehaviour
 	{
 
 		bool isGround = IsGrounded();
-
-		// 걷다가 떨어지는 상황
+		
+		 
+		// 걷다가 점프, 혹으 떨어지는 상황
 		if (wasGrounded && !isGround)
 		{
-			animHandler.Falling(); 
+			animHandler.Falling();
+			climbHandler.IsJump(true);
 		}
 
 		// 점프 후, 착지 상황
 		else if (!wasGrounded && isGround) 
 		{
 			animHandler.Landing();
+			climbHandler.IsJump(false);
 		}
 
 		wasGrounded = isGround;

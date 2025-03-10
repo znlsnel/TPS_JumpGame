@@ -28,7 +28,7 @@ public class MovingPlatform : Platform
 		isLoop = lineRenderer.loop;
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		MovePlatform();
 		MoveObjectOnPlatform();
@@ -38,7 +38,15 @@ public class MovingPlatform : Platform
 	{
 		Vector3 dir = transform.position - prevPosition;
 		foreach (var target in targets)
-			target.transform.position += dir; 
+		{
+			var rigid = target.GetComponent<Rigidbody>();
+			if (rigid != null)
+			{
+				rigid.MovePosition(target.transform.position + dir); 
+			}
+			else
+				target.transform.position += dir; 
+		}
 
 		prevPosition = transform.position;
 	}
@@ -48,7 +56,7 @@ public class MovingPlatform : Platform
 		Vector3 dir = (positions[nextIdx] - positions[curIdx]).normalized;
 		float goalDist = Vector3.Distance(positions[nextIdx], positions[curIdx]);
 
-		transform.position += dir * Time.deltaTime * speed;
+		transform.position += dir * Time.fixedDeltaTime * speed;
 		float curDist = Vector3.Distance(transform.position, positions[curIdx]);
 
 		if (goalDist <= curDist)
