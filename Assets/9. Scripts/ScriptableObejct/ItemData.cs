@@ -28,6 +28,7 @@ public class ItemData : ScriptableObject
     [SerializeField] public float moveSpeed;
     [SerializeField] public float jumpPower;
     [SerializeField] public float stamina;
+    [SerializeField] public float health; 
     [SerializeField] public EItemType type;
 
     [Header("Equipable Item Info")]
@@ -49,8 +50,10 @@ public class ItemData : ScriptableObject
         if (jumpPower > 0)
             ret += $"점프력 + {jumpPower}\n";
         if (stamina > 0) 
-            ret += $"스태미나 {stamina} 회복";
-
-        return ret; 
+            ret += $"스태미나 {stamina} 회복\n";
+        if (health > 0)
+			ret += $"체력 {health} 회복";
+         
+		return ret; 
     }
 }

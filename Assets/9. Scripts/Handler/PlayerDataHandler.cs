@@ -36,6 +36,7 @@ public class PlayerDataHandler : MonoBehaviour
 		statHander.MoveSpeed += moveSpeed;
 		statHander.JumpPower += jumpPower;
 		statHander.GetCondition(ConditionType.Stamina).Add(item.data.stamina);
+		statHander.GetCondition(ConditionType.Health).Add(item.data.health);
 
 		Action removeEffect = () =>
 		{

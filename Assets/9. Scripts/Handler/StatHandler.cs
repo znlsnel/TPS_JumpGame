@@ -58,4 +58,6 @@ public class StatHandler : MonoBehaviour
 	{
 		onPressDashButton = context.ReadValue<float>() > 0; 
 	}
+
+	public bool IsDie() => conditions[ConditionType.Health].curValue <= 0.0f;
 }

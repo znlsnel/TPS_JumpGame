@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 	private Vector3 targetRot;
 
 	private bool wasGrounded = true;
+	private Vector3 knockback = Vector3.zero;
+	private float knockbackDuration = 0.0f;
+
 
 	public StatHandler StatHandler => statHandler;
 	public PlayerDataHandler PlayerDataHandler => playerDataHandler;
@@ -58,6 +61,8 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		Rotate(targetRot);
+		if (knockbackDuration > 0.0f) 
+			knockbackDuration -= Time.deltaTime;
 	}
 
 	private void FixedUpdate()
@@ -87,25 +92,26 @@ public class PlayerController : MonoBehaviour
 
 
 	void Move(Vector2 dir)
-	{  
-		if (dir.magnitude <= 0f)
-		{
-
-			return; 
-		}
-		 
-		 
-		 
+	{
 		Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
 		float cameraYaw = Camera.main.transform.eulerAngles.y;
 
 		Quaternion yawRotation = Quaternion.Euler(0, cameraYaw, 0);
 		Vector3 rotatedInputDir = yawRotation * inputDir; 
 
-		Quaternion inputRotation = Quaternion.LookRotation(rotatedInputDir);
-		targetRot = inputRotation.eulerAngles; // 최종 회전 각도
+		if (rotatedInputDir != Vector3.zero)
+		{
+			Quaternion inputRotation = Quaternion.LookRotation(rotatedInputDir);
+			targetRot = inputRotation.eulerAngles; // 최종 회전 각도
+		} 
+		Vector3 direction = rotatedInputDir * statHandler.MoveSpeed;
+		if (knockbackDuration > 0.0f)
+		{
+			direction *= 0.2f; 
+			direction += knockback;
+		}
 
-		SetVelocity(rotatedInputDir * statHandler.MoveSpeed); 
+		SetVelocity(direction); 
 	}
 	void Rotate(Vector3 rot)
 	{
@@ -117,10 +123,8 @@ public class PlayerController : MonoBehaviour
 		float t = Mathf.Clamp01((rotSpeed * Time.deltaTime) / angleDifference);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
 	}
-	void SetVelocity(Vector3 v)
+	void SetVelocity(Vector3 v) 
 	{ 
-	//	_rigidbody.MovePosition(transform.position + (v * 0.01f)) ;
-		// _rigidbody.AddForce(v);
 		_rigidbody.velocity = new Vector3(v.x, _rigidbody.velocity.y, v.z);
 	}
 	bool IsGrounded()
@@ -162,4 +166,13 @@ public class PlayerController : MonoBehaviour
 
 		wasGrounded = isGround;
 	}
+
+	public void ApplyKnockback(Vector3 dir, float power, float duration)
+	{
+		knockbackDuration = duration; 
+		knockback = dir.normalized * power;
+	}
+
+
+
 }

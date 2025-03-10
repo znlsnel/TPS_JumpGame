@@ -491,7 +491,7 @@ MonoBehaviour:
   type: 0
   startValue: 10
   maxValue: 10
-  passiveValuePerSecond: 0.1
+  passiveValuePerSecond: 0
   slider: {fileID: 7595102127949869898}
 --- !u!224 &7595102127949869901 stripped
 RectTransform:

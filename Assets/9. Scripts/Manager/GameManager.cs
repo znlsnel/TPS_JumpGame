@@ -38,18 +38,20 @@ public class GameManager : Singleton<GameManager>
 	{
 		gameUIHandler.GameClear();
 	}
+
 	void CheckGameOver()
 	{
 		if (isGameOver)
 			return; 
 
-		if (player.transform.position.y < yGameOverLimit)
+		if (player.transform.position.y < yGameOverLimit || player.StatHandler.IsDie())
 		{
 			isGameOver = true;
 			gameUIHandler?.GameOver();
 			Invoke(nameof(RespawnPlayer), respawnTime);
 		}
 	} 
+
 	void RespawnPlayer()
 	{
 		gameUIHandler?.InitUI();
@@ -59,7 +61,6 @@ public class GameManager : Singleton<GameManager>
 		foreach (Item item in consumableItems)
 			item.InitItem();
 	}
-
 
 	public IEnumerator RepeatingAction(Action action, float timeRate)
 	{
