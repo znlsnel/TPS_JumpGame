@@ -52,8 +52,8 @@ public class GameManager : Singleton<GameManager>
 	{ 
 		gameUIHandler?.InitUI();
 		player.transform.position = StartPoint.position;
-		player.StatHandler.GetCondition(ConditionType.Health).Add(100000);
-		isGameOver = false;
+		player.StatHandler.Heal(100000);
+		isGameOver = false; 
 
 		foreach (Item item in consumableItems)
 			item.InitItem();

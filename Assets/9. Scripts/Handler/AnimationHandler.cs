@@ -9,6 +9,8 @@ public class AnimationHandler : MonoBehaviour
 	private static readonly int IsJumping = Animator.StringToHash("IsJump");
 	private static readonly int IsInAir = Animator.StringToHash("IsInAir");
 	private static readonly int Climb = Animator.StringToHash("Climb");
+	private static readonly int IsDie = Animator.StringToHash("IsDie");
+	private static readonly int IsAlive = Animator.StringToHash("IsAlive");
 
 
 	protected Animator animator;
@@ -41,7 +43,11 @@ public class AnimationHandler : MonoBehaviour
 	public void OnClimb()
 	{
 		animator.SetTrigger(Climb);
-	
 	}
-
+	public void OnDie(bool active)
+	{
+		animator.SetBool(IsAlive, !active); 
+		if (active)  
+			animator.SetTrigger(IsDie);  
+	}
 }

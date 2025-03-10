@@ -16,19 +16,21 @@ public class StatHandler : MonoBehaviour
 	[Range(1f, 20f)][SerializeField] private float jumpPower = 10;
 	[SerializeField] private float dashCostPerSecond;
 
+	private bool onPressDashButton = false;
+	public event Action onTakeDamage;
+	private AnimationHandler anim;
+	private InputManager input;
 	public float JumpPower { get => jumpPower; set => jumpPower = Mathf.Clamp(value, 0, 100); }
+	bool IsDashing => onPressDashButton && conditions[ConditionType.Stamina].curValue >= dashCostPerSecond * Time.deltaTime;
 	public float MoveSpeed {
 		get => IsDashing ? moveSpeed + dashSpeed : moveSpeed;
 		set => moveSpeed = Mathf.Clamp(value, 0, 100); 
 	}
 
-	bool onPressDashButton = false;
-	bool IsDashing => onPressDashButton && conditions[ConditionType.Stamina].curValue >= dashCostPerSecond * Time.deltaTime;
-	private InputManager input;
 
-	public event Action onTakeDamage;
 	private void Start() 
 	{
+		anim = GetComponent<AnimationHandler>();
 		input = InputManager.Instance;
 		input.Dash.action.started += OnDashInput;
 		input.Dash.action.canceled += OnDashInput;
@@ -69,8 +71,23 @@ public class StatHandler : MonoBehaviour
 			return;
 
 		onTakeDamage?.Invoke();
+
+
+
 		health.Substract(damage);
 		if (health.curValue <= 0.0f)
+		{
 			GameManager.Instance.GameOver();
+			anim.OnDie(true);
+		}
+	}
+
+	public void Heal(float value)
+	{
+		var health = GetCondition(ConditionType.Health);
+		if (health.curValue <= 0.0f)
+			anim.OnDie(false);
+
+		health.Add(value);
 	}
 }
