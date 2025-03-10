@@ -46,7 +46,7 @@ public class ClimbHandler : MonoBehaviour
 		if (!isJump || !isMove || climbTargetPos != null)
 			return;
 
-		for (int i = 0; i < 3; i ++)
+		for (int i = 0; i < 4; i ++) 
 		{ 
 			Vector3 yOffset = new Vector3(0, -0.5f * i, 0);
 			Ray ray = new Ray(rayCastPoint.position + yOffset, gameObject.transform.forward);
@@ -63,8 +63,8 @@ public class ClimbHandler : MonoBehaviour
 					bool isForward = Vector3.Dot(rigid.velocity, (targetPos - transform.position).normalized) > -0.5f;
 
 					Debug.Log((hit.point.y + -0.5f * i) - targetPos.y);
-					if (isForward && Mathf.Abs((hit.point.y + -0.5f * i) - targetPos.y) < 1.3f)
-					{ 
+					if (isForward && Mathf.Abs((rayCastPoint.position.y) - targetPos.y) < 1.3f)
+					{  
 						targetPos += (transform.forward * 0.2f);
 						StartClimb(hit.collider.gameObject, targetPos);
 						break;

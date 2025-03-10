@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 		climbHandler.Move(moveDir.magnitude > 0f);
 		if (moveDir.magnitude <= 0f && IsGrounded())
 		{
-			//SetVelocity(_rigidbody.velocity / 3);  
+			SetVelocity(_rigidbody.velocity / 3);   
 			return;   
 		}
 	}
@@ -89,7 +89,10 @@ public class PlayerController : MonoBehaviour
 	void Move(Vector2 dir)
 	{  
 		if (dir.magnitude <= 0f)
+		{
+
 			return; 
+		}
 		 
 		 
 		 
@@ -115,11 +118,10 @@ public class PlayerController : MonoBehaviour
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
 	}
 	void SetVelocity(Vector3 v)
-	{
-		_rigidbody.MovePosition(transform.position + (v * 0.01f)) ; 
-		//v.y = _rigidbody.velocity.y;
-		//_rigidbody.velocity = v;
-
+	{ 
+	//	_rigidbody.MovePosition(transform.position + (v * 0.01f)) ;
+		// _rigidbody.AddForce(v);
+		_rigidbody.velocity = new Vector3(v.x, _rigidbody.velocity.y, v.z);
 	}
 	bool IsGrounded()
 	{

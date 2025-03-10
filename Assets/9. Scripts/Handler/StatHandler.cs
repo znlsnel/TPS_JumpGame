@@ -18,7 +18,7 @@ public class StatHandler : MonoBehaviour
 
 	public float JumpPower { get => jumpPower; set => jumpPower = Mathf.Clamp(value, 0, 100); }
 	public float MoveSpeed {
-		get => IsDashing ? dashSpeed : moveSpeed;
+		get => IsDashing ? moveSpeed + dashSpeed : moveSpeed;
 		set => moveSpeed = Mathf.Clamp(value, 0, 100); 
 	}
 

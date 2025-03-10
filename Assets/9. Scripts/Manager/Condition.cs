@@ -18,7 +18,7 @@ public class Condition : MonoBehaviour
 	[SerializeField] private float startValue;
 	[SerializeField] private float maxValue;
 	[SerializeField] private float passiveValuePerSecond;
-	[SerializeField] private Image uiBar;
+	[SerializeField] private Slider slider;
 
 	[NonSerialized] public float curValue;
 
@@ -34,7 +34,7 @@ public class Condition : MonoBehaviour
 
 	private void Update()
 	{
-		uiBar.fillAmount = GetPercentage();
+		slider.value = GetPercentage();
 		Add(passiveValuePerSecond * Time.deltaTime); 
 	}
 

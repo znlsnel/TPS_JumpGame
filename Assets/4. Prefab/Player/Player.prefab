@@ -640,6 +640,7 @@ Transform:
   - {fileID: 1122049048483931779}
   - {fileID: 3647559793816167789}
   - {fileID: 4072398222443703471}
+  - {fileID: 2556502379831675679}
   m_Father: {fileID: 4483086650354872881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3613742011202403094
@@ -729,8 +730,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3937894606882680725}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.064715326, y: -0.057142254, z: 0.37558857, w: -0.9227568}
-  m_LocalPosition: {x: -0.2052342, y: -0.000000087864315, z: 0.00000008480845}
+  m_LocalRotation: {x: 0.00000011169119, y: -0.000000035933763, z: 0.06849614, w: -0.99765134}
+  m_LocalPosition: {x: -0.20523417, y: -0.00000008823903, z: 0.000000083818804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -740,6 +741,37 @@ Transform:
   - {fileID: 6430431611262141302}
   - {fileID: 6486026644964978788}
   m_Father: {fileID: 4303941221828499335}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4000026993773494750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2556502379831675679}
+  m_Layer: 0
+  m_Name: ClimbRayCastPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2556502379831675679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4000026993773494750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.011, y: 1.5, z: -0.208}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 253484651008156664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4367676945268669366
 GameObject:
@@ -1947,7 +1979,7 @@ MonoBehaviour:
   rotSpeed: 720
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 183
 --- !u!114 &7024759439126362014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,8 +1992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40d705009536a54ba2b2a7bb12f14e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  dashSpeed: 11.9
+  moveSpeed: 5
+  dashSpeed: 8
   jumpPower: 7
   dashCostPerSecond: 2
 --- !u!114 &4640981402228111841

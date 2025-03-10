@@ -52,16 +52,16 @@ public class EquipHandler : MonoBehaviour
 			curItem.transform.SetParent(null, false);
 			curItem.transform.position = transform.position + transform.forward * 0.3f;
 			myItem.data.onUnequip?.Invoke();
-			curItem.gameObject.GetComponent<BoxCollider>().enabled = true;
+			curItem.gameObject.GetComponent<Item>().SetActiveItem(true);
 		}
 		else
-			Destroy(curItem);
+			Destroy(curItem); 
 		 
 
 		// 새로운 아이템 장착
-		nextItem.gameObject.GetComponent<BoxCollider>().enabled = false;
+		nextItem.gameObject.GetComponent<Item>().SetActiveItem(false);
 		nextItem.transform.SetParent(ts, false);
-        nextItem.transform.localPosition = Vector3.zero;
+		nextItem.transform.localPosition = Vector3.zero;
         equipItems[type] = nextItem; 
 	}
 }

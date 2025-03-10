@@ -49,8 +49,8 @@ public class PlayerDataHandler : MonoBehaviour
 			StartCoroutine(GameManager.Instance.SetTimer(() =>
 			{
 				removeEffect?.Invoke();
-			}, duration));
-			Destroy(item.gameObject);
+			}, duration)); 
+			item.UseConsumableItem();
 		}
 		else
 		{

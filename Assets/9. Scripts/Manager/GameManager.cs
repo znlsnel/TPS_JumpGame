@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 	public bool IsGameOver => isGameOver;
 	public PlayerController PlayerController => player;
 	List<GameObject> itemPrefabs = new List<GameObject>();
-
+	List<Item> consumableItems = new List<Item>();
 	protected override void Awake() 
 	{
 		base.Awake();
@@ -26,6 +26,12 @@ public class GameManager : Singleton<GameManager>
 		player = FindFirstObjectByType<PlayerController>();
 		itemPrefabs = Util.GetItemPrefabs();
 		InvokeRepeating(nameof(CheckGameOver), 0, 0.1f);
+
+		Item[] myItem = FindObjectsByType<Item>(FindObjectsSortMode.None);
+
+		foreach (Item item in myItem)
+			if (item.data.type == EItemType.Consumable)
+				consumableItems.Add(item);	
 	}
 	 
 	public void Clear()
@@ -49,6 +55,9 @@ public class GameManager : Singleton<GameManager>
 		gameUIHandler?.InitUI();
 		player.transform.position = StartPoint.position;
 		isGameOver = false;
+
+		foreach (Item item in consumableItems)
+			item.InitItem();
 	}
 
 
