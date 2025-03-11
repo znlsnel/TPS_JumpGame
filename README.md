@@ -333,7 +333,66 @@ public void Interaction(GameObject player)
   <summary>아이템 소개</summary>
   
   ## 📗 아이템
-  
+  ![image](https://github.com/user-attachments/assets/96e92409-fdcd-4066-9f90-afa4ed6f128d)
+- Scriptable Object를 통해 아이템의 데이터를 설계했습니다. <br>
+
+```csharp
+public enum EItemType
+{
+	Equipable,
+	Consumable,
+}
+
+public enum EEquipType
+{
+	Cloak,
+	Body,
+	Head,
+	Hair,
+}
+```
+- enum을 통해 아이템의 타입을 선택할 수 있게 하였습니다. <br>
+  장착형 아이템의 경우 어디에 장착할건지를 Type으로 결정하게 됩니다. <br>
+<br><br>
+
+[🔗 Equip Handler](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Handler/EquipHandler.cs)
+```csharp
+private Dictionary<EEquipType, Transform> equipTf = new Dictionary<EEquipType, Transform>();
+private Dictionary<EEquipType, GameObject> equipItems = new Dictionary<EEquipType, GameObject>();
+private Dictionary<EEquipType, Action> onUnEquip = new Dictionary<EEquipType, Action>();
+
+public void EquipItem(Item item)
+{
+  EEquipType type = item.data.equipType;
+  Transform ts = equipTf[type];
+
+  GameObject nextItem = item.gameObject;
+  GameObject curItem = equipItems[type];
+
+  // 현재 장착중인 아이템 장착 해제
+  if (curItem != null && curItem.TryGetComponent(out Item myItem))
+  {
+    curItem.transform.SetParent(null, false);
+    curItem.transform.position = transform.position + transform.forward * 0.3f;
+    myItem.data.onUnequip?.Invoke();
+    curItem.gameObject.GetComponent<Item>().SetActiveItem(true);
+  }
+  else
+    Destroy(curItem); 
+   
+  // 새로운 아이템 장착
+  nextItem.gameObject.GetComponent<Item>().SetActiveItem(false);
+  nextItem.transform.SetParent(ts, false);
+  nextItem.transform.localPosition = Vector3.zero;
+  equipItems[type] = nextItem; 
+}
+```
+- 아이템의 장착은 Equip Handler에서 담당하도록 설계했습니다. <br>
+  장착 아이템을 해당 클래스의 EquipItem 함수를 통해 보내면 위의 Dictionary를 통해서 장착 로직을 수행하게 됩니다 <br>
+  우선 equipTf로 장착할 위치를 찾고, equipItems를 통해 해당 위치에 장착중인 아이템을 찾습니다. <br>
+  이미 장착중인 아이템은 장착 해제를 하게되는데 이때, 아이템의 수치(스피드, 점프력 등)을 빼주는 함수를 onUnEquip을 통해 해결합니다 <br>
+<br><br>
+
   <br><br>
 </details>
 
