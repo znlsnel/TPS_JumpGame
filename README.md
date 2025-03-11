@@ -29,9 +29,7 @@
   <summary>카메라 시스템</summary>
   
   ## 카메라 시스템
-![카메라 무빙](https://github.com/user-attachments/assets/b03cbbe3-a922-4f7c-97eb-aabd13b8bc5a)
-
-  
+  <img src="https://github.com/user-attachments/assets/b03cbbe3-a922-4f7c-97eb-aabd13b8bc5a" alt="카메라 무빙" width="500px"> <br>
   <br><br>
     
 </details>
@@ -40,11 +38,9 @@
   <summary>캐릭터 로직</summary>
   
   ## 캐릭터 로직
-![이동](https://github.com/user-attachments/assets/9dd95c67-0407-4fa4-b6c0-0afe0638cbdb)
-![점프](https://github.com/user-attachments/assets/90d9e4b6-ed92-4e10-8dd8-3172315679c8)
-![벽타기](https://github.com/user-attachments/assets/6e63daaf-14eb-4345-941e-95dd1927d0db)
-
-
+<img src="https://github.com/user-attachments/assets/9dd95c67-0407-4fa4-b6c0-0afe0638cbdb" alt="이동" width="500px"> <br>
+<img src="https://github.com/user-attachments/assets/90d9e4b6-ed92-4e10-8dd8-3172315679c8" alt="점프" width="500px"> <br>
+<img src="https://github.com/user-attachments/assets/6e63daaf-14eb-4345-941e-95dd1927d0db" alt="벽타기" width="500px"> <br>
 
 
   
@@ -56,7 +52,7 @@
   <summary>상호작용</summary>
   
   ## 상호작용
-
+<img src="https://github.com/user-attachments/assets/724601c5-d8c8-47ea-861e-567a6bab121a" alt="벽타기" width="500px"> <br>
   
   <br><br>
 </details>
