@@ -72,8 +72,6 @@ public class ClimbHandler : MonoBehaviour
 				}
 			}
 		}
-
-		
 	}
 
 	void StartClimb(GameObject go, Vector3 targetPos)

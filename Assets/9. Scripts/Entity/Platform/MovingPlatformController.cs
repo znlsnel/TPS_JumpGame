@@ -20,14 +20,18 @@ public class MovingPlatformController : PlatformController
 	protected override void Awake() 
 	{
 		base.Awake();
+
 		lineRenderer = GetComponent<LineRenderer>();
+
 		positions = new Vector3[lineRenderer.positionCount];
 		lineRenderer.GetPositions(positions); 
-		LocalToWorld(positions);  
+
+		LocalToWorld(positions);
 
 		platform.transform.position = prevPosition = positions[0];
 		isLoop = lineRenderer.loop;
 	}
+
 	protected virtual void FixedUpdate()
 	{
 		if (isOneWay && curIdx > nextIdx)

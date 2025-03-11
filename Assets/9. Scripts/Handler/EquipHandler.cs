@@ -12,16 +12,17 @@ public class EquipHandler : MonoBehaviour
     static private readonly string BackpackEquip = "Backpack_Equip";
     static private readonly string BodyEquip = "Body_Equip";
 
-    private Dictionary<EEquipType, Transform> equipTs = new Dictionary<EEquipType, Transform>();
+    private Dictionary<EEquipType, Transform> equipTf = new Dictionary<EEquipType, Transform>();
     private Dictionary<EEquipType, GameObject> equipItems = new Dictionary<EEquipType, GameObject>();
     private Dictionary<EEquipType, Action> onUnEquip = new Dictionary<EEquipType, Action>();
 
+
     private void Awake()
     {
-        equipTs.Add(EEquipType.Head, Util.FindChildByName(transform, headEquip));
-        equipTs.Add(EEquipType.Hair, Util.FindChildByName(transform, HairEquip));
-        equipTs.Add(EEquipType.Body, Util.FindChildByName(transform, BodyEquip));
-        equipTs.Add(EEquipType.Cloak, Util.FindChildByName(transform, BackpackEquip));
+        equipTf.Add(EEquipType.Head, Util.FindChildByName(transform, headEquip));
+        equipTf.Add(EEquipType.Hair, Util.FindChildByName(transform, HairEquip));
+        equipTf.Add(EEquipType.Body, Util.FindChildByName(transform, BodyEquip));
+        equipTf.Add(EEquipType.Cloak, Util.FindChildByName(transform, BackpackEquip));
 
 		foreach (EEquipType type in Enum.GetValues(typeof(EEquipType)))
 		{
@@ -33,7 +34,7 @@ public class EquipHandler : MonoBehaviour
      
     public void FindItems(EEquipType type) 
     {
-        equipItems[type] = equipTs[type].childCount > 0 ? equipTs[type].GetChild(0).gameObject : null;
+        equipItems[type] = equipTf[type].childCount > 0 ? equipTf[type].GetChild(0).gameObject : null;
 	}
 
 
@@ -41,7 +42,7 @@ public class EquipHandler : MonoBehaviour
 	public void EquipItem(Item item)
     {
         EEquipType type = item.data.equipType;
-        Transform ts = equipTs[type];
+        Transform ts = equipTf[type];
 
 		GameObject nextItem = item.gameObject;
         GameObject curItem = equipItems[type];
