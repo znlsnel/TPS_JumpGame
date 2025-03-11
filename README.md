@@ -396,21 +396,132 @@ public void EquipItem(Item item)
   <br><br>
 </details>
 
-
-<details>
-  <summary>Game UI</summary>
-  
-  ## 💬 Game UI
-  
-  <br><br>
-</details>
-
 <details>
   <summary>플랫폼</summary>
   
-  ## 🟫 플랫폼 [🔗 Script Link](https://github.com/znlsnel/TPS_JumpGame/tree/main/Assets/9.%20Scripts/Entity/Platform)
+  ## 🟫 플랫폼 [🔗 Platform](https://github.com/znlsnel/TPS_JumpGame/tree/main/Assets/9.%20Scripts/Entity/Platform)
 <img src="https://github.com/user-attachments/assets/34e0f688-4009-4010-a5ac-fddfad17e9ed" alt="플랫폼" width="500px"> <br>
 <img src="https://github.com/user-attachments/assets/cd576d86-0eb1-4eca-a639-d770c19a49b3" alt="플랫폼 루프" width="500px"> <br>
+- 점프 플랫폼, 무빙 플랫폼, 플랫폼 런처를 구현했습니다.
+
+[🔗 Platform Controller](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Platform/PlatformController.cs)<br>
+[🔗 Platform](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Platform/Platform.cs)
+- 플랫폼을 조종하는 컨트롤러와, 플랫폼을 관리하는 script를 따로 작성했습니다.
+- LineRenerer의 정점들을 통해 플랫폼의 움직임을 구현하였는데 플랫폼이 움직일때 <br>
+  LineRenerer가 같이 움직이면 안되기 때문에 위처럼 분리하여 작성했습니다. <br>
+  플랫폼은 플레이어가 플랫폼 위에 올라왔는지 감지하는 역할을 수행하고, 플랫폼 컨트롤러에 그 정보를 전달합니다.
+<br><br>
+
+[🔗 JumpPlatform Controller](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Platform/JumpPlatformController.cs)
+```csharp
+public override void EnterObject(GameObject go)
+{
+	base.EnterObject(go);
+    anim.SetTrigger(Push);  
+}
+ 
+public void AE_OnPush() 
+{
+    foreach (var target in targets)
+    {
+        Rigidbody rb = target.GetComponent<Rigidbody>();
+	if (rb != null)
+	{
+	    rb.velocity = Vector3.zero;
+	    rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+	} 
+    }
+} 
+```
+- 점프 플랫폼의 경우 플레이어가 접근할 때, 플랫폼을 띄우는 애니메이션이 실행되고<br>
+  애니메이션 이벤트를 통해 플레이어를 위로 띄우는 로직을 실행합니다.
+
+<br><br>
+
+[🔗 MovingPlatform Controller](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Platform/MovingPlatformController.cs)
+```csharp
+protected override void Awake() 
+{
+	base.Awake();
+
+	lineRenderer = GetComponent<LineRenderer>();
+
+	positions = new Vector3[lineRenderer.positionCount];
+	lineRenderer.GetPositions(positions); 
+
+	LocalToWorld(positions);
+
+	platform.transform.position = prevPosition = positions[0];
+	isLoop = lineRenderer.loop;
+}
+
+private void MoveObjectOnPlatform()
+{
+	Vector3 dir = platform.transform.position - prevPosition;
+	foreach (var target in targets)
+	{
+		var rigid = target.GetComponent<Rigidbody>();
+		if (rigid != null)
+		{
+			rigid.MovePosition(target.transform.position + dir);
+		}
+		else
+			target.transform.position += dir;
+	}
+
+	prevPosition = platform.transform.position;
+}
+```
+- 무빙 플랫폼은 라인랜더러에 저장된 정점 정보를 불러온 후, 정점의 위치값을 순회하는 방식으로 구현했습니다. <br>
+  이 때, 플랫폼 위에 오브젝트가 있으면 같이 이동시키는 함수도 함께 호출됩니다.
+<br><br>
+
+[🔗 Platform Launcher](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Platform/PlatformLauncher.cs)
+```csharp
+void ChargeGauge(InputAction.CallbackContext context)
+{
+	isChagingGauge = true;
+	UIHandler.Instance.GaugeUI.OpenUI();
+	GetComponent<BoxCollider>().enabled = false;
+}
+
+void CancelGaugeCharge(InputAction.CallbackContext context)
+{
+	UIHandler.Instance.GaugeUI.CloseUI();
+	isChagingGauge = false;
+	isLaunched = true;
+
+	Vector3 dir = (endPos - startPos);
+	targetPos = startPos + (dir * gauge);   
+	height = Maxheight * gauge;
+	timeElapsed = 0.0f;
+}
+
+protected override void MovePlatform()
+{
+	if (!isLaunched) 
+		return;
+
+	timeElapsed += Time.deltaTime;
+	float t = timeElapsed / duration;
+
+	if (t > 1.0f)
+		t = 1.0f;
+	
+	 
+	Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
+	currentPos.y += Mathf.Sin(t * Mathf.PI) * height;
+
+	platform.transform.position = currentPos;
+
+	if (t >= 1.0f) 
+		DropPlatform();
+}
+```
+- 플랫폼 런처는 상호작용 키를 누를때, ChargeGauge 함수가 호출되고, 키를 캔슬할 때, CancelGaugeCharge 함수가 호출되도록 했습니다. <br>
+  CancelGaugeCharge 함수가 호출되면 현재 gauge의 값에 따라 발사되는 거리를 결정합니다. 이후 isLaunched 함수가 호출되며 <br>
+  발사가 진행되도록 했습니다. <br>
+  발사가 끝나면 DropPlatform 함수를 통해 경로를 벗어나 바닥으로 떨어지도록 했습니다. <br>
 
   <br><br>
 </details>
@@ -419,8 +530,73 @@ public void EquipItem(Item item)
 <details>
   <summary>트랩</summary>
   
-  ## 🎲 트랩 [🔗 Script Link](https://github.com/znlsnel/TPS_JumpGame/tree/main/Assets/9.%20Scripts/Entity/Trap)
+  ## 🎲 트랩 [🔗 Trap](https://github.com/znlsnel/TPS_JumpGame/tree/main/Assets/9.%20Scripts/Entity/Trap)
 <img src="https://github.com/user-attachments/assets/f242b020-7d72-4f87-87f1-844118848906" alt="트랩" width="500px"> <br>
+- 트랩은 함정을 실행하는 Trap 클래스, 플레이어를 감지하는 trap Sensor 클래스로 구성되어 있습니다. <br>
+
+[🔗 LazerTrap Sensor](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Trap/LazerTrapSensor.cs)
+```csharp
+void Update()
+{
+	Vector3 pos = transform.position;
+	pos.y = posY + (Mathf.Sin(Time.time * 1.5f) + 1);
+	transform.position = pos;
+	lineRenderer.SetPosition(0, laserStart.position);
+	lineRenderer.SetPosition(1, laserEnd.position);
+
+	if (Time.time - lastFindTime < delayTime)
+		return;
+
+
+	Ray ray = new Ray(laserStart.position, (laserEnd.position - laserStart.position).normalized);
+	RaycastHit hit;
+
+	if (Physics.Raycast(ray, out hit, (laserEnd.position - laserStart.position).magnitude, playerMask))
+	{
+		lastFindTime = Time.time;
+		onFindPlayer?.Invoke(); 
+	}
+}
+```
+- Trap Sensor 클래스를 상속받은 Lazer Trap Sensor 클래스에서는 업데이트문에서 Raycast를 통해 플레이어를 감지하도록 했습니다. <br>
+  감지에 성공하면 onFindPlayer Event를 실행시킵니다. 해당 Event에는 Trap 클래스와 연결되어 함정이 발동되도록 했습니다.
+<br><br>
+
+[🔗 Trap](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Trap/Trap.cs) <br>
+[🔗 Bullet Trap](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Trap/BulletTrap.cs)
+```csharp
+// Trap Class
+private void Awake()
+{
+	var list = transform.GetComponentsInChildren<TrapSensor>();
+	foreach (var s in list)
+	{
+		s.onFindPlayer.AddListener(TrapOn);
+		sensors.Add(s);
+	}
+}
+
+
+// Bullet Trap Class
+public class BulletTrap : Trap
+{
+	[SerializeField] private GameObject bulletPrefab;
+	[SerializeField] private float bulletSpeed;
+
+	protected override void TrapOn()
+	{
+		var bullet = Instantiate(bulletPrefab);
+		bullet.transform.position = transform.position;
+
+		Vector3 dir = (player.transform.position - bullet.transform.position).normalized;
+		bullet.GetComponent<Rigidbody>().AddForce(dir * bulletSpeed, ForceMode.Impulse);
+		GameManager.Instance.SetTimer(() => Destroy(bullet), 10.0f);
+	}
+}
+```
+- TrapSensor에서 onFindPlayer Event가 실행되면 TrapOn 함수가 호출됩니다.<br>
+  Bullet Trap에서는 플레이어에게 총알을 발사하는 로직이 실행되도록 했습니다.
+
 
   <br><br>
 </details>
