@@ -102,16 +102,160 @@ void SetCameraDist()
 <details>
   <summary>캐릭터 로직</summary>
   
-  ## 🕹️ 캐릭터 로직 [🔗 Script Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/PlayerController.cs)
+  ## 🕹️ 캐릭터 로직 [🔗 Player Controller Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/PlayerController.cs) 
 <img src="https://github.com/user-attachments/assets/9dd95c67-0407-4fa4-b6c0-0afe0638cbdb" alt="이동" width="500px"> <br>
 <img src="https://github.com/user-attachments/assets/90d9e4b6-ed92-4e10-8dd8-3172315679c8" alt="점프" width="500px"> <br>
-<img src="https://github.com/user-attachments/assets/6e63daaf-14eb-4345-941e-95dd1927d0db" alt="벽타기" width="500px"> <br>
+- 캐릭터 로직 <br>
+``` csharp
+void Move(Vector2 dir)
+{
+  Vector3 inputDir = new Vector3(dir.x, 0, dir.y);
+  float cameraYaw = Camera.main.transform.eulerAngles.y;
 
+  Quaternion yawRotation = Quaternion.Euler(0, cameraYaw, 0);
+  Vector3 rotatedInputDir = yawRotation * inputDir; 
+
+  if (rotatedInputDir != Vector3.zero)
+  {
+    Quaternion inputRotation = Quaternion.LookRotation(rotatedInputDir);
+    targetRot = inputRotation.eulerAngles; // 최종 회전 각도
+  } 
+  Vector3 direction = rotatedInputDir * statHandler.MoveSpeed;
+  if (knockbackDuration > 0.0f)
+  {
+    direction *= 0.2f; 
+    direction += knockback;
+  }
+
+  SetVelocity(direction); 
+}
+```
+- 캐릭터가 카메라의 Yaw값을 기준으로 이동하도록 했습니다. <br>
+  왼쪽, 오른쪽, 뒤로 가는 키를 입력시, 그만큼 회전을 추가했습니다. <br>
+<br><br>
+
+```csharp
+void Rotate(Vector3 rot)
+{
+  if (moveDir.magnitude <= 0f) 
+    return;
+
+  Quaternion targetRotation = Quaternion.Euler(rot);
+  float angleDifference = Quaternion.Angle(transform.rotation, targetRotation);
+  float t = Mathf.Clamp01((rotSpeed * Time.deltaTime) / angleDifference);
+  transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+}
+```
+- 캐릭터 회전시 한틱에 회전하면 부자연스럽다고 느꼈습니다. 이에 targetRot 변수에 회전값을 넣어놓고 <br>
+  서서히 회전하도록 구현했습니다.
+  <br><br>
+
+``` csharp
+bool IsGrounded()
+{
+  Ray[] rays = new Ray[4]
+  {
+    new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+    new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+    new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+    new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+  };
+
+  for (int i = 0; i < rays.Length; i++)
+  {
+    if (Physics.Raycast(rays[i], 1f, groundLayerMask))
+      return true;
+  }
+  return false;
+}
+```
+- 캐릭터 점프는 Rigidbody의 AddForce 기능을 통해 간단하게 구현했습니다.
+- 현재 땅바닥에 있는지 체크한 후, 바닥에 있는 경우에만 점프할 수 있도록 했습니다.
+<br><br><br><br>
+
+<img src="https://github.com/user-attachments/assets/6e63daaf-14eb-4345-941e-95dd1927d0db" alt="벽타기" width="500px"> <br> 
+- ClimbHandler 클래스를 통해 벽타기 기능을 구현했습니다. [🔗 ClimbHandler Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Handler/ClimbHandler.cs)
+``` csharp
+void ClimbCheck()
+{
+  if (!isJump || !isMove || climbTargetPos != null)
+    return;
+
+  for (int i = 0; i < 4; i ++) 
+  { 
+    Vector3 yOffset = new Vector3(0, -0.5f * i, 0);
+    Ray ray = new Ray(rayCastPoint.position + yOffset, gameObject.transform.forward);
+    RaycastHit hit;
+
+    if (Physics.Raycast(ray, out hit, 1.5f, climbLayer)) 
+    {
+      BoxCollider bc = hit.collider as BoxCollider;
+      if (bc != null)
+      {
+        Vector3 targetPos = hit.point;
+        targetPos.y = hit.collider.gameObject.transform.position.y + bc.center.y + (bc.size.y * bc.transform.localScale.y) / 2;
+
+        bool isForward = Vector3.Dot(rigid.velocity, (targetPos - transform.position).normalized) > -0.5f;
+
+        Debug.Log((hit.point.y + -0.5f * i) - targetPos.y);
+        if (isForward && Mathf.Abs((rayCastPoint.position.y) - targetPos.y) < 1.3f)
+        {  
+          targetPos += (transform.forward * 0.2f);
+          StartClimb(hit.collider.gameObject, targetPos);
+          break;
+        }
+      }
+    }
+  }
+}
+```
+- ClimbCheck 함수를 통해 벽타기가 가능한지 체크를 했습니다. <br>
+  머리에서부터 아래로 4개의 Raycast를 발사하여 충돌을 체크했습니다. <br>
+  이후 충돌 대상이 BoxCollider를 가지고 있으며, BoxCollider의 위쪽 부분에 충돌했다면 벽타기 기능을 수행하도록 설계했습니다.
+<br><br>
+
+``` csharp
+void Climb(Transform climbPos)
+{
+  if (climbPos == null)
+    return;
+
+  //Vector3 dir = climbPos.Value - handTf.position;
+  Vector3 dir = climbPos.position - transform.position; 
+    
+  float dist = dir.magnitude;  
+  if (dist > 0.1f)
+    dir = dir * dist * Time.fixedDeltaTime * 3.0f;
+
+  rigid.MovePosition(transform.position + dir); 
+} 
+```
+- 업데이트 함수에서 위의 Climb 함수를 호출하여 위로 이동하도록 했습니다. <br>
+  처음 구현할 때에는 오른손이 항상 climbPos에 위치하도록 설계를 했지만 <br>
+  캐릭터가 끝까지 오르지 않는 문제가 발생했고, 마지막에 위치값을 보정해주는 것도 부자연스러웠습니다. <br>
+  결론적으로는 캐릭터의 위치가 서서히 clibPos로 이동하도록 하여 최대한 자연스럽게 오르도록 구현했습니다.
+  <br><br><br><br>
 
   
+<img src="https://github.com/user-attachments/assets/5943f507-b4a1-4a26-9621-47ec43830bc2" alt="이미지" width="800px"> <br> 
+- 캐릭터 애니메이션의 경우 Animation Handler를 통해 애니메이션을 실행했습니다. [🔗 AnimationHandler Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Handler/AnimationHandler.cs) <br>
+``` csharp
+public void Move(Vector3 moveDir) => animator.SetBool(IsMoving, moveDir.magnitude > 0.5f); 
+public void Jump() => animator.SetTrigger(IsJumping);
+public void Landing() => animator.SetBool(IsInAir, false);  
+public void Falling() => animator.SetBool(IsInAir, true);
+public void OnClimb() => animator.SetTrigger(Climb);
+public void OnDie(bool active)
+{
+  animator.SetBool(IsAlive, !active); 
+  if (active)  
+    animator.SetTrigger(IsDie);  
+}
+```
+- 움직일때, 점프할 때, 착지할 때 등 각각의 상황에 함수들이 호출되도록 하였고 <br>
+  애니메이션 관련 로직들은 해당 클래스에서만 실행되도록 설계했습니다.
   <br><br>
 </details>
-
 
 <details>
   <summary>상호작용</summary>
