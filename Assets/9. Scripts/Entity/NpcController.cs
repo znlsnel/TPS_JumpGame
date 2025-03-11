@@ -9,7 +9,7 @@ public enum NpcState
     Move,
 }
 
-public class NpcController : MonoBehaviour, interactableObject
+public class NpcController : MonoBehaviour, IInteractableObject
 {
 	private static readonly int Greeting = Animator.StringToHash("Greeting");
 	private static readonly int Throw = Animator.StringToHash("Throw");

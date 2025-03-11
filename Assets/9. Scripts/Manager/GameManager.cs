@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 	protected override void Awake() 
 	{
 		base.Awake();
-
+		Util.ItemInitialize();
 		gameUIHandler = FindFirstObjectByType<GameUIHandler>(); 
 		player = FindFirstObjectByType<PlayerController>();
 		itemPrefabs = Util.GetItemPrefabs();

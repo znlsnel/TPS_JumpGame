@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour, interactableObject
+public class Item : MonoBehaviour, IInteractableObject
 {
 	[SerializeField] public ItemData data;
 	private BoxCollider myCollider;

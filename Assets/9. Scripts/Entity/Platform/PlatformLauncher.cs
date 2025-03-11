@@ -69,12 +69,14 @@ public class PlatformLauncher : MovingPlatformController
 	 
 	void InitPlatformLauncher()
 	{
+		GetComponent<BoxCollider>().enabled = true;
 		platformRb.isKinematic = true;
 		isChagingGauge = false;
 		isLaunched = false;
 		isWaiting = false;
 		gauge = 0f;
-		
+		UIHandler.Instance.GaugeUI.CloseUI();
+		 
 		InitPlatform();
 		
 	}
@@ -89,6 +91,7 @@ public class PlatformLauncher : MovingPlatformController
 		{
 			InputManager.Instance.Interaction.action.started += ChargeGauge;
 			InputManager.Instance.Interaction.action.canceled += CancelGaugeCharge;
+			
 		}
 	}
 	public override void ExitObject(GameObject go)
@@ -99,7 +102,15 @@ public class PlatformLauncher : MovingPlatformController
 			InputManager.Instance.Interaction.action.started -= ChargeGauge;
 			InputManager.Instance.Interaction.action.canceled -= CancelGaugeCharge;
 
-		}
+			UIHandler.Instance.GaugeUI.CloseUI();
+
+			if (!isLaunched)
+			{
+				GetComponent<BoxCollider>().enabled = true;
+				isChagingGauge = false;  
+				gauge = 0f;
+			}
+		} 
 	}
 
 
@@ -107,6 +118,8 @@ public class PlatformLauncher : MovingPlatformController
 	{
 		isChagingGauge = true;
 		UIHandler.Instance.GaugeUI.OpenUI();
+		GetComponent<BoxCollider>().enabled = false;
+
 	}
 
 	void CancelGaugeCharge(InputAction.CallbackContext context)

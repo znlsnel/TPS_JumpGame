@@ -24,7 +24,7 @@ public class Util : MonoBehaviour
 	}
 
 	[MenuItem("Tools/ItemInitialize")]
-	static void ItemInitialize()
+	public static void ItemInitialize()
 	{ 
 		string[] prefabsPath = AssetDatabase.FindAssets("t:GameObject", new[] { prefabPath });
 		string[] itemDatasPath = AssetDatabase.FindAssets("t:ScriptableObject", new[] { itemDataPath });

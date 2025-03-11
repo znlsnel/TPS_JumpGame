@@ -15,9 +15,12 @@ public class InteractionHandler : MonoBehaviour
 	 
 	private InteractionUI interactionUI;
 	private RectTransform aim;
-	private interactableObject selectObject;
+	private IInteractableObject selectObject;
 
-
+	private void Awake()
+	{
+		
+	}
 	private void Start()
 	{
 		InvokeRepeating(nameof(Find), 0, 0.1f);
@@ -39,11 +42,12 @@ public class InteractionHandler : MonoBehaviour
     {
 		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * xOffset, Screen.height * yOffset, 0));
 		RaycastHit hit;
-
+		 
+		float dist = interactionDistance + (Camera.main.transform.position - transform.position).magnitude;
 		bool found = false;
-		if (Physics.Raycast(ray, out hit, interactionDistance, layer))
+		if (Physics.Raycast(ray, out hit, dist, layer)) 
 		{
-			var obj = hit.collider.gameObject.GetComponent<interactableObject>();
+			var obj = hit.collider.gameObject.GetComponent<IInteractableObject>();
 			if (obj != selectObject)
 			{
 				obj.ShowInfo();
