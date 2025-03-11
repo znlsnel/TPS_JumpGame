@@ -15,6 +15,13 @@
 <br>
 
 ---
+
+# 플레이 영상
+[![시연 영상](https://github.com/user-attachments/assets/8aa7e540-2031-4566-8f29-03370f165eb8)](https://www.youtube.com/watch?v=WddA5sAjhDg&feature=youtu.be) 
+
+
+<br><br>
+---
  
 # 핵심 기능 
 
