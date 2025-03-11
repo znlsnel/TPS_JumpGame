@@ -113,6 +113,8 @@ public class PlayerController : MonoBehaviour
 
 		SetVelocity(direction); 
 	}
+
+
 	void Rotate(Vector3 rot)
 	{
 		if (moveDir.magnitude <= 0f) 
@@ -123,6 +125,8 @@ public class PlayerController : MonoBehaviour
 		float t = Mathf.Clamp01((rotSpeed * Time.deltaTime) / angleDifference);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
 	}
+
+
 	void SetVelocity(Vector3 v) 
 	{ 
 		_rigidbody.velocity = new Vector3(v.x, _rigidbody.velocity.y, v.z);
@@ -144,13 +148,12 @@ public class PlayerController : MonoBehaviour
 		}
 		return false;
 	}
+
 	void LandCheck()
 	{
-
 		bool isGround = IsGrounded();
 		
-		 
-		// 걷다가 점프, 혹으 떨어지는 상황
+		// 걷다가 점프, 혹은 떨어지는 상황
 		if (wasGrounded && !isGround)
 		{
 			animHandler.Falling();

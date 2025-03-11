@@ -20,34 +20,17 @@ public class AnimationHandler : MonoBehaviour
 		animator = GetComponent<Animator>();
 	}
 
-	public void Move(Vector3 moveDir)
-	{
-		animator.SetBool(IsMoving, moveDir.magnitude > 0.5f); 
-	}
-
-	public void Jump()
-	{
-		animator.SetTrigger(IsJumping);
-	}
-
-	public void Landing()
-	{
-		animator.SetBool(IsInAir, false);  
-	}
-
-	public void Falling()
-	{
-		animator.SetBool(IsInAir, true);
-	}
-
-	public void OnClimb()
-	{
-		animator.SetTrigger(Climb);
-	}
+	public void Move(Vector3 moveDir) => animator.SetBool(IsMoving, moveDir.magnitude > 0.5f); 
+	public void Jump() => animator.SetTrigger(IsJumping);
+	public void Landing() => animator.SetBool(IsInAir, false);  
+	public void Falling() => animator.SetBool(IsInAir, true);
+	public void OnClimb() => animator.SetTrigger(Climb);
 	public void OnDie(bool active)
 	{
 		animator.SetBool(IsAlive, !active); 
 		if (active)  
 			animator.SetTrigger(IsDie);  
 	}
+
+
 }

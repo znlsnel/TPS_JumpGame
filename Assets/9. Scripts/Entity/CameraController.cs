@@ -89,14 +89,18 @@ public class CameraController : MonoBehaviour
 	void SetCameraDist() 
 	{
 		float dist = cameraDist;
+
+		// 몸통의 중간에서 부터 시작
 		Vector3 startPos = transform.position + Vector3.up * 0.3f;
 		Vector3 dir = (Camera.main.transform.position - startPos).normalized;
 
+		// 충돌을 했다면 카메라 거리 조절
 		Ray ray = new Ray(startPos + Vector3.up * 0.2f, dir);   
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, dist * 1.1f, hitLayer))
+		if (Physics.Raycast(ray, out hit, dist, hitLayer))
 			dist = (hit.point - startPos).magnitude; 
 
+		// 혹시 모를 예외 상황을 위해 dist와 cameraDist중 최소값을 넣어줌
 		Camera.main.transform.localPosition = cameraDir * Mathf.Min(dist, cameraDist);
 	}  
 
