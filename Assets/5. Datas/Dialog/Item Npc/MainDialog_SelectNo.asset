@@ -15,6 +15,6 @@ MonoBehaviour:
   text: "\uC54C\uACA0\uC5B4~ \uC0DD\uAC01\uC774 \uBC14\uB00C\uBA74 \uC5B8\uC81C\uB4E0
     \uC640\uB3C4 \uB3FC"
   responses:
-  - text: "\u3147\u314B~"
+  - text: "\uC751~"
     nextDialog: {fileID: 0}
     Assept: 0
