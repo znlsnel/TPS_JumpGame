@@ -9573,7 +9573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985947714}
   m_Layer: 0
-  m_Name: Cubes
+  m_Name: 2. Cubes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
