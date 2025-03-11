@@ -28,7 +28,7 @@
 <details>
   <summary>카메라 시스템</summary>
   
-  ## 📷 카메라 시스템 [🔗 Script Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/CameraController.cs)
+  ## 📷 카메라 시스템 [🔗 Camera Controller](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/CameraController.cs)
   <img src="https://github.com/user-attachments/assets/a3585003-bf92-4f98-8c19-0be4dffebb08" alt="카메라 무빙" width="500px"> <br>
 - **3인칭 카메라**<br>
   3인칭 카메라를 구현했습니다. 카메라가 플레이어 주변을 회전하도록 구현하였고, <br>
@@ -260,9 +260,72 @@ public void OnDie(bool active)
 <details>
   <summary>상호작용</summary>
   
-  ## 🤝 상호작용 [🔗 Script Link](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Handler/InteractionHandler.cs)
+  ## 🤝 상호작용 [🔗 Interaction Handler](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Handler/InteractionHandler.cs)
 <img src="https://github.com/user-attachments/assets/724601c5-d8c8-47ea-861e-567a6bab121a" alt="벽타기" width="500px"> <br>
-  
+``` csharp
+void Find()
+  {
+  Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width * xOffset, Screen.height * yOffset, 0));
+  RaycastHit hit;
+   
+  float dist = interactionDistance + (Camera.main.transform.position - transform.position).magnitude;
+  bool found = false;
+  if (Physics.Raycast(ray, out hit, dist, layer)) 
+  {
+    var obj = hit.collider.gameObject.GetComponent<IInteractableObject>();
+    if (obj != selectObject)
+    {
+      obj.ShowInfo();
+      selectObject = obj;
+    }
+    found = obj != null;
+  }
+
+  if (!found && selectObject != null)
+  {
+    interactionUI.Init();
+    selectObject = null;
+  }
+} 
+```
+- InvokeRepeating함수를 통해 0.1초에 한번씩 위의 Find 함수가 호출 되도록 했습니다. <br>
+  인스펙터에서 설정한 에임의 위치 ( y, xOffset )을 이용해 Raycast를 하고, IInteractableObject 인터페이스를 상속받은 오브젝트를 찾습니다 <br>
+  이후, 인터페이스의 ShowInfo 함수를 통해 정보 UI가 표시되도록 하였으며, <br>
+  상호작용을 위해 selectObject 라는 이름으로 오브젝트를 저장했습니다.
+<br><br>
+
+```csharp
+void InteractionInput(InputAction.CallbackContext context)
+{
+  if (selectObject == null)
+    return;
+
+  selectObject.Interaction(gameObject); 
+}
+```
+- 상호작용키를 입력받을 때, selectObject가 존재한다면 해당 인터페이스의 Interaction 함수를 호출하여 상호작용을 구현했습니다.
+<br><br>
+
+ [🔗 Item](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/Item.cs)
+```csharp
+public void Interaction(GameObject player)
+{
+  player.GetComponent<PlayerDataHandler>()?.PickupItem(this);
+}
+```
+- Item 클래스의 경우에는 PlayerDataHandler의 PickupItem 함수를 호출하여 아이템이 실행되도록 하였습니다.
+<br><br>
+
+ [🔗 Npc Controller](https://github.com/znlsnel/TPS_JumpGame/blob/main/Assets/9.%20Scripts/Entity/NpcController.cs)
+```csharp 
+public void Interaction(GameObject player)
+{
+  UIHandler.Instance.DialogUI.OpenUI(npcName, dialog, () => CheckCoin());
+}
+```
+- Npc Controller의 경우 대화창이 켜지는 로직이 실행되도록 했습니다.
+<br><br>
+
   <br><br>
 </details>
 
