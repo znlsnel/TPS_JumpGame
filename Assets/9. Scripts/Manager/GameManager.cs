@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
 	public float respawnTime;
 
 	private GameUIHandler gameUIHandler;
-	private PlayerController player; 
+	private PlayerController player;  
 	private bool isGameOver = false; 
 	public bool IsGameOver => isGameOver;
 	public PlayerController PlayerController => player;

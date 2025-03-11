@@ -7,7 +7,7 @@ public class LazerTrapSensor : TrapSensor
 	[SerializeField] private Transform laserStart;
 	[SerializeField] private Transform laserEnd; 
 	[SerializeField] private LayerMask playerMask;
-
+	private LineRenderer lineRenderer;
 	private float posY;
 
 	private float delayTime = 0.3f;
@@ -15,6 +15,8 @@ public class LazerTrapSensor : TrapSensor
 
 	private void Awake()
 	{
+		lineRenderer = GetComponent<LineRenderer>();
+		lineRenderer.positionCount = 2;
 		posY = transform.position.y;
 	}
 
@@ -29,6 +31,8 @@ public class LazerTrapSensor : TrapSensor
 		Vector3 pos = transform.position;
 		pos.y = posY + (Mathf.Sin(Time.time * 1.5f) + 1);
 		transform.position = pos;
+		lineRenderer.SetPosition(0, laserStart.position);
+		lineRenderer.SetPosition(1, laserEnd.position);
 
 		if (Time.time - lastFindTime < delayTime)
 			return;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Util : MonoBehaviour
 {
 	static readonly string prefabPath = "Assets/4. Prefab/Items";
-	static readonly string itemDataPath = "Assets/5. Datas/EquipItem";
+	static readonly string itemDataPath = "Assets/5. Datas/Items";
 
 	public static List<GameObject> GetItemPrefabs()
 	{

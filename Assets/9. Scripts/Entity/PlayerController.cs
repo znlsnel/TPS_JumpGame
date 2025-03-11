@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 	private Vector3 knockback = Vector3.zero;
 	private float knockbackDuration = 0.0f;
 
-
+	
 	public StatHandler StatHandler => statHandler;
 	public PlayerDataHandler PlayerDataHandler => playerDataHandler;
 	private void Awake()

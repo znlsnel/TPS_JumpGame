@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpPlatform : Platform
+public class JumpPlatformController : PlatformController
 {
 	[SerializeField] private float jumpPower;
 
 	private static readonly int Push = Animator.StringToHash("Push");
 	private Animator anim;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		anim = GetComponent<Animator>();
-	}
-	 
-	protected override void OnPlatformImpact()
+	} 
+
+	public override void EnterObject(GameObject go)
 	{
-		anim.SetTrigger(Push); 
+		base.EnterObject(go);
+		anim.SetTrigger(Push);  
 	}
 	 
 	public void AE_OnPush() 

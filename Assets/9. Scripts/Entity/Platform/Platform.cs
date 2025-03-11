@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Platform : MonoBehaviour
+public class Platform : MonoBehaviour
 {
 	[SerializeField] private LayerMask layer;
+	
+	private PlatformController platformController;
 
-	protected HashSet<GameObject> targets = new HashSet<GameObject>();
+	private void Awake()
+	{
+		platformController = GetComponentInParent<PlatformController>();
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if ((layer.value | (1 << other.gameObject.layer)) == layer.value)
 		{
-			targets.Add(other.gameObject);
-			OnPlatformImpact();
+			platformController.EnterObject(other.gameObject);
 		}
 	}
 
@@ -20,10 +25,9 @@ public abstract class Platform : MonoBehaviour
 	{
 		if ((layer.value | (1 << other.gameObject.layer)) == layer.value)
 		{
-			targets.Remove(other.gameObject);
+			platformController.ExitObject(other.gameObject); 
 		} 
 	}
 
-	protected abstract void OnPlatformImpact();
 }
  

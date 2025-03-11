@@ -6,8 +6,11 @@ using static UnityEditor.Progress;
 
 public class PlayerDataHandler : MonoBehaviour
 {
+
 	private int coin = 1; 
-	public int Coin {get => coin; set=>coin = value; }	
+	public int Coin { get => coin; set {  coin = value; onUpdateCoin?.Invoke(); } }
+	public event Action onUpdateCoin;
+
 	EquipHandler equipHandler;
 	StatHandler statHander;
 
@@ -37,6 +40,7 @@ public class PlayerDataHandler : MonoBehaviour
 		statHander.JumpPower += jumpPower;
 		statHander.GetCondition(ConditionType.Stamina).Add(item.data.stamina);
 		statHander.GetCondition(ConditionType.Health).Add(item.data.health);
+		Coin += item.data.coin;
 
 		Action removeEffect = () =>
 		{

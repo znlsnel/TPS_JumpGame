@@ -129,17 +129,6 @@
                 },
                 {
                     "name": "",
-                    "id": "ac41fdee-cc8e-4684-8a75-8210eb3918a9",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "66ecbe9e-ebcf-445e-bf22-88a517e4d163",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
@@ -168,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac41fdee-cc8e-4684-8a75-8210eb3918a9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
