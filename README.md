@@ -269,7 +269,7 @@ public void OnDie(bool active)
 <details>
   <summary>아이템 소개</summary>
   
-  ## 📗 아이템 소개
+  ## 📗 아이템
   
   <br><br>
 </details>
