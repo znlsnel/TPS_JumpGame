@@ -29,7 +29,9 @@
   <summary>카메라 시스템</summary>
   
   ## 카메라 시스템
-  <img src="https://github.com/user-attachments/assets/b03cbbe3-a922-4f7c-97eb-aabd13b8bc5a" alt="카메라 무빙" width="500px"> <br>
+  <img src="https://github.com/user-attachments/assets/a3585003-bf92-4f98-8c19-0be4dffebb08" alt="카메라 무빙" width="500px"> <br>
+
+  
   <br><br>
     
 </details>
@@ -79,6 +81,7 @@
   
   ## 플랫폼
 <img src="https://github.com/user-attachments/assets/34e0f688-4009-4010-a5ac-fddfad17e9ed" alt="플랫폼" width="500px"> <br>
+<img src="https://github.com/user-attachments/assets/cd576d86-0eb1-4eca-a639-d770c19a49b3" alt="플랫폼 루프" width="500px"> <br>
 
   <br><br>
 </details>
