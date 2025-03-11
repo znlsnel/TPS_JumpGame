@@ -78,7 +78,8 @@
   <summary>플랫폼</summary>
   
   ## 플랫폼
-  
+<img src="https://github.com/user-attachments/assets/34e0f688-4009-4010-a5ac-fddfad17e9ed" alt="플랫폼" width="500px"> <br>
+
   <br><br>
 </details>
 
@@ -87,6 +88,7 @@
   <summary>트랩</summary>
   
   ## 트랩
-  
+<img src="https://github.com/user-attachments/assets/f242b020-7d72-4f87-87f1-844118848906" alt="트랩" width="500px"> <br>
+
   <br><br>
 </details>
