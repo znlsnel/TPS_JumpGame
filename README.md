@@ -26,23 +26,11 @@
 # 핵심 기능 
 
 <details>
-  <summary>목차</summary>
-  
-  ## 목차
-- 카메라 시스템
-- 캐릭터 로직
-- 상호작용
-- 아이템 소개
-- Game UI
-- 플랫폼
-- 트랩
-  <br><br>
-</details>
-
-<details>
   <summary>카메라 시스템</summary>
   
   ## 카메라 시스템
+![카메라 무빙](https://github.com/user-attachments/assets/b03cbbe3-a922-4f7c-97eb-aabd13b8bc5a)
+
   
   <br><br>
     
@@ -52,6 +40,14 @@
   <summary>캐릭터 로직</summary>
   
   ## 캐릭터 로직
+![이동](https://github.com/user-attachments/assets/9dd95c67-0407-4fa4-b6c0-0afe0638cbdb)
+![점프](https://github.com/user-attachments/assets/90d9e4b6-ed92-4e10-8dd8-3172315679c8)
+![벽타기](https://github.com/user-attachments/assets/6e63daaf-14eb-4345-941e-95dd1927d0db)
+
+
+
+
+  
   <br><br>
 </details>
 
